@@ -116,7 +116,6 @@ Décompressez ou placez le projet dans un répertoire local.
 ---
 
 ## Équipe du projet
-- **[Mehdi ARRAB](https://github.com/jadoothepooh/)**
 - **[Lasry BESKIWIN](https://github.com/Lasryy)**
 - **[Rania Bousfiha](https://github.com/rania212)**
 - **[Safiya NGUYEN](https://github.com/safiya-ng)**
