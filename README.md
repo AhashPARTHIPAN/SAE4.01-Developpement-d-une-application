@@ -1,5 +1,5 @@
 
-# SAE3.01: Développement d'une application
+# SAE4.01 : Développement d'une application
 
 ## Aperçu du projet
 Voici un aperçu de l'application :
@@ -17,7 +17,7 @@ L'Université Sorbonne Paris Nord possède une collection exceptionnelle de plus
 - **Interface web** : Recherche avancée, gestion des prêts, et gestion de l'inventaire.
 - **Scripts Python** : Manipulation automatisée des données.
 
----
+--- 
 
 ## Structure du projet
 ```plaintext
