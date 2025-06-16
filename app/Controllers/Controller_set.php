@@ -70,7 +70,7 @@ class Controller_set extends Controller
             $m->updateInfosJeu($infos);
             $changes = [];
             foreach ($infos as $k => $v) {
-                $dbKey = $k === 'titre_jeu' ? 'titre' : ($k === 'nombre_joueurs' ? 'nombre_de_joueurs' : ($k === 'age_min' ? 'age_indique' : $k));
+                $dbKey = $this->mapDatabaseKey($k);
                 if (isset($ancien[$dbKey]) && $ancien[$dbKey] !== $v) {
                     $changes[] = "$dbKey=" . $ancien[$dbKey] . "->" . $v;
                 }
