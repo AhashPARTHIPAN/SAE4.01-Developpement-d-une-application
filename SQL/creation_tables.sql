@@ -65,7 +65,6 @@ DROP TABLE IF EXISTS pret;
 DROP TABLE IF EXISTS boite;
 DROP TABLE IF EXISTS jeu;
 DROP TABLE IF EXISTS emprunteur;
-DROP TABLE IF EXISTS historique;
 DROP TABLE IF EXISTS utilisateur;
 DROP TABLE IF EXISTS localisation;
 DROP TABLE IF EXISTS collection;
@@ -99,15 +98,6 @@ CREATE TABLE emprunteur (
     adresse TEXT,
     date_naissance DATE,
     FOREIGN KEY (emprunteur_id) REFERENCES utilisateur(utilisateur_id)
-);
-
-CREATE TABLE historique (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    utilisateur_id INT NOT NULL,
-    action VARCHAR(100) NOT NULL,
-    details TEXT,
-    date_action TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(utilisateur_id)
 );
 
 
