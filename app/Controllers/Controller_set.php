@@ -71,7 +71,7 @@ class Controller_set extends Controller
             $changes = [];
             foreach ($infos as $k => $v) {
                 $dbKey = $k === 'titre_jeu' ? 'titre' : ($k === 'nombre_joueurs' ? 'nombre_de_joueurs' : ($k === 'age_min' ? 'age_indique' : $k));
-                if (isset($ancien[$dbKey]) && $ancien[$dbKey] != $v) {
+                if (isset($ancien[$dbKey]) && $ancien[$dbKey] !== $v) {
                     $changes[] = "$dbKey=" . $ancien[$dbKey] . "->" . $v;
                 }
             }
