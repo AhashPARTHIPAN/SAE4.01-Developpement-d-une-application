@@ -178,7 +178,7 @@ class Model
         return $tab;
     }
 
-    public function getParMotCle($motCle)
+      public function getParMotCle($motCle)
     {
         // Préparer la requête SQL pour rechercher dans la colonne mots_cles
         $req = $this->bd->prepare('
@@ -439,8 +439,7 @@ class Model
         }
     }
 
-    public function updateInfosJeu($infos)
-    {
+    public function updateInfosJeu($infos) {
         // Préparation de la requête SQL pour mettre à jour la table 'jeu'
         $sql = "UPDATE jeu SET 
                     titre = :titre_jeu, 
@@ -452,10 +451,10 @@ class Model
                     age_indique = :age_min,
                     mots_cles = :mots_cles
                 WHERE id_jeu = :id_jeu";
-
+    
         // Préparation de la requête
         $stmt = $this->bd->prepare($sql);
-
+    
         // Lier les paramètres aux valeurs envoyées dans le formulaire
         $stmt->bindParam(':id_jeu', $infos['id_jeu'], PDO::PARAM_INT);
         $stmt->bindParam(':titre_jeu', $infos['titre_jeu'], PDO::PARAM_STR);
@@ -466,10 +465,10 @@ class Model
         $stmt->bindParam(':nombre_joueurs', $infos['nombre_joueurs'], PDO::PARAM_STR);
         $stmt->bindParam(':age_min', $infos['age_min'], PDO::PARAM_STR);
         $stmt->bindParam(':mots_cles', $infos['mots_cles'], PDO::PARAM_STR);
-
+    
         // Exécution de la requête
         $stmt->execute();
-
+    
         // Retourner un message de succès
         return "Le jeu a bien été mis à jour.";
     }
@@ -515,32 +514,28 @@ class Model
 
     // Méthodes pour récupérer les catégories, auteurs, éditeurs et mécanismes
     // getters en plus pour le form_add
-    public function getIdOfCategories()
-    {
+    public function getIdOfCategories() {
         $query = "SELECT id_categorie FROM categorie LIMIT 5";
         $stmt = $this->bd->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 
-    public function getAuteurs()
-    {
+    public function getAuteurs() {
         $query = "SELECT auteur_id FROM auteur LIMIT 5";
         $stmt = $this->bd->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
-
-    public function getEditeurs()
-    {
+    
+    public function getEditeurs() {
         $query = "SELECT editeur_id FROM editeur LIMIT 5";
         $stmt = $this->bd->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 
-    public function getMecanismes()
-    {
+    public function getMecanismes() {
         $query = "SELECT mecanisme_id FROM mecanisme LIMIT 5";
         $stmt = $this->bd->prepare($query);
         $stmt->execute();
@@ -549,17 +544,16 @@ class Model
 
     // Méthodes pour insérer dans les tables associées
     // fonction de add sur chaque table en séparant
-    public function addJeu($infos)
-    {
+    public function addJeu($infos) {
         // Vérifiez que toutes les clés de $infos existent
         if (isset($infos['titre_jeu'], $infos['date_parution_debut'])) {
-
+            
             $query = "INSERT INTO jeu (identifiant, titre, date_parution_debut, date_parution_fin, information_date, version, 
                                         nombre_de_joueurs, age_indique, mots_cles) 
                       VALUES (:identifiant, :titre_jeu, :date_parution_debut, :date_parution_fin, :information_date, :version, 
                               :nombre_joueurs, :age_min, :mots_cles)";
             $stmt = $this->bd->prepare($query);
-
+    
             // Lier les paramètres
             $stmt->bindParam(':identifiant', $infos['identifiant']);
             $stmt->bindParam(':titre_jeu', $infos['titre_jeu']);
@@ -570,7 +564,7 @@ class Model
             $stmt->bindParam(':nombre_joueurs', $infos['nombre_joueurs']);
             $stmt->bindParam(':age_min', $infos['age_min']);
             $stmt->bindParam(':mots_cles', $infos['mots_cles']);
-
+    
             // Exécuter la requête
             if ($stmt->execute()) {
                 // Retourner l'ID du jeu inséré
@@ -582,50 +576,45 @@ class Model
             return false;
         }
     }
+    
 
-
-    public function addJeuCategorie($jeu_id, $categorie_id)
-    {
+    public function addJeuCategorie($jeu_id, $categorie_id) {
         $query = "INSERT INTO jeu_categorie (id_jeu, id_categorie) VALUES (:jeu_id, :categorie_id)";
         $stmt = $this->bd->prepare($query);
         $stmt->execute(['jeu_id' => $jeu_id, 'categorie_id' => $categorie_id]);
     }
 
-    public function addJeuAuteur($jeu_id, $auteur_id)
-    {
+    public function addJeuAuteur($jeu_id, $auteur_id) {
         $query = "INSERT INTO jeu_auteur (id_jeu, auteur_id) VALUES (:jeu_id, :auteur_id)";
         $stmt = $this->bd->prepare($query);
         $stmt->execute(['jeu_id' => $jeu_id, 'auteur_id' => $auteur_id]);
     }
 
-    public function addJeuEditeur($jeu_id, $editeur_id)
-    {
+    public function addJeuEditeur($jeu_id, $editeur_id) {
         $query = "INSERT INTO jeu_editeur (id_jeu, editeur_id) VALUES (:jeu_id, :editeur_id)";
         $stmt = $this->bd->prepare($query);
         $stmt->execute(['jeu_id' => $jeu_id, 'editeur_id' => $editeur_id]);
     }
 
-    public function addMecanisme($mecanisme_name)
-    {
+    public function addMecanisme($mecanisme_name) {
         $query = "INSERT INTO mecanisme (nom) VALUES (:nom)";
         $stmt = $this->bd->prepare($query);
         $stmt->bindParam(':nom', $mecanisme_name, PDO::PARAM_STR);
         $stmt->execute();
-
+    
         return $this->bd->lastInsertId();  // Retourne l'ID du mécanisme ajouté
     }
-
-
-    public function addJeuMecanisme($jeu_id, $mecanisme_id)
-    {
+    
+    
+    public function addJeuMecanisme($jeu_id, $mecanisme_id) {
         // Insérer l'association jeu-mécanisme dans la table de liaison
         $query = "INSERT INTO jeu_mecanisme (id_jeu, id_mecanisme) VALUES (:jeu_id, :mecanisme_id)";
         $stmt = $this->bd->prepare($query);
-
+    
         // Lier les paramètres
         $stmt->bindParam(':jeu_id', $jeu_id);
         $stmt->bindParam(':mecanisme_id', $mecanisme_id);
-
+    
         // Exécuter la requête
         if ($stmt->execute()) {
             return true;
@@ -633,14 +622,13 @@ class Model
             return false;
         }
     }
-
-    public function getMecanismeIdByName($mecanisme_name)
-    {
+    
+    public function getMecanismeIdByName($mecanisme_name) {
         $query = "SELECT mecanisme_id FROM mecanisme WHERE nom = :nom";
         $stmt = $this->bd->prepare($query);
         $stmt->bindParam(':nom', $mecanisme_name, PDO::PARAM_STR);
         $stmt->execute();
-
+    
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['mecanisme_id'] : false;
     }
@@ -693,32 +681,7 @@ class Model
             return false;
         }
     }
-
-    public function logAction($utilisateurId, $action, $details = null)
-    {
-        $sql = "INSERT INTO historique (utilisateur_id, action, details)
-                VALUES (:uid, :act, :det)";
-        $stmt = $this->bd->prepare($sql);
-        $stmt->execute([
-            ':uid' => $utilisateurId,
-            ':act' => $action,
-            ':det' => $details
-        ]);
-    }
-
-    public function getHistorique($limit = 100)
-    {
-        $sql = "SELECT h.id, u.nom, h.action, h.details, h.date_action
-                FROM historique h
-                JOIN utilisateur u ON h.utilisateur_id = u.utilisateur_id
-                ORDER BY h.date_action DESC
-                LIMIT :lim";
-        $stmt = $this->bd->prepare($sql);
-        $stmt->bindValue(':lim', (int) $limit, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
+    
 }
 
 ?>
