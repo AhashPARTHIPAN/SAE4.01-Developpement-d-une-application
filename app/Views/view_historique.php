@@ -5,6 +5,9 @@
 <div class="container">
     <h1>Historique des actions</h1>
     <div class="historique-container">
+        <div class="historique-info">
+            <p>Total des actions : <?= $total ?> entrées</p>
+        </div>
         <table class="historique-table">
             <thead>
                 <tr>
@@ -61,6 +64,42 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+        <?php if ($pages > 1): ?>
+            <div class="pagination">
+                <?php if ($current_page > 1): ?>
+                    <a href="?controller=historique&page=<?= $current_page - 1 ?>" class="page-link">&laquo; Précédent</a>
+                <?php endif; ?>
+
+                <?php
+                $start = max(1, $current_page - 2);
+                $end = min($pages, $current_page + 2);
+
+                if ($start > 1) {
+                    echo '<a href="?controller=historique&page=1" class="page-link">1</a>';
+                    if ($start > 2) {
+                        echo '<span class="page-dots">...</span>';
+                    }
+                }
+
+                for ($i = $start; $i <= $end; $i++) {
+                    $class = $i === $current_page ? 'page-link active' : 'page-link';
+                    echo '<a href="?controller=historique&page=' . $i . '" class="' . $class . '">' . $i . '</a>';
+                }
+
+                if ($end < $pages) {
+                    if ($end < $pages - 1) {
+                        echo '<span class="page-dots">...</span>';
+                    }
+                    echo '<a href="?controller=historique&page=' . $pages . '" class="page-link">' . $pages . '</a>';
+                }
+                ?>
+
+                <?php if ($current_page < $pages): ?>
+                    <a href="?controller=historique&page=<?= $current_page + 1 ?>" class="page-link">Suivant &raquo;</a>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 
