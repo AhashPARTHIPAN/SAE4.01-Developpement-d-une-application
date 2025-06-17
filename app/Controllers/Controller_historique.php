@@ -15,10 +15,11 @@ class Controller_historique extends Controller
             header('Location: index.php');
             exit;
         }
+
+        $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
         $m = Model::getModel();
-        $data = [
-            'logs' => $m->getHistorique()
-        ];
+        $data = $m->getHistorique($page);
+
         $this->render('historique', $data);
     }
 }

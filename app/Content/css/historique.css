@@ -5,6 +5,14 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+.historique-info {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    color: #666;
+}
+
 .historique-table {
     width: 100%;
     border-collapse: collapse;
@@ -98,4 +106,38 @@
 .action-ajout {
     background-color: #e8f5e9;
     color: #2e7d32;
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-link {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.page-link:hover {
+    background-color: #f5f5f5;
+    border-color: #ccc;
+}
+
+.page-link.active {
+    background-color: #1976d2;
+    color: white;
+    border-color: #1976d2;
+}
+
+.page-dots {
+    color: #666;
+    padding: 0 4px;
 } 

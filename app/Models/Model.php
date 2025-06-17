@@ -768,17 +768,33 @@ class Model
         ]);
     }
 
-    public function getHistorique($limit = 100)
+    public function getHistorique($page = 1, $limit = 50)
     {
+        $offset = ($page - 1) * $limit;
+
+        // Récupérer le nombre total d'entrées
+        $sqlCount = "SELECT COUNT(*) FROM historique";
+        $stmtCount = $this->bd->prepare($sqlCount);
+        $stmtCount->execute();
+        $total = $stmtCount->fetchColumn();
+
+        // Récupérer les entrées avec pagination
         $sql = "SELECT h.id, u.nom, h.action, h.details, h.date_action
                 FROM historique h
                 JOIN utilisateur u ON h.utilisateur_id = u.utilisateur_id
                 ORDER BY h.date_action DESC
-                LIMIT :lim";
+                LIMIT :lim OFFSET :offset";
         $stmt = $this->bd->prepare($sql);
         $stmt->bindValue(':lim', (int) $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            'logs' => $stmt->fetchAll(PDO::FETCH_ASSOC),
+            'total' => $total,
+            'pages' => ceil($total / $limit),
+            'current_page' => $page
+        ];
     }
 
 }
