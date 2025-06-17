@@ -346,7 +346,7 @@ class Controller_set extends Controller
             if ($suppression) {
                 $detail = 'id=' . $id;
                 if ($util) {
-                    $detail .= '; nom=' . $util['nom'];
+                    $detail .= '; nom=' . $util['nom'] . '; email=' . $util['email'] . '; role=' . $util['role'];
                 }
                 $m->logAction(
                     $_SESSION['utilisateur']['id'],
@@ -366,6 +366,22 @@ class Controller_set extends Controller
             "message" => $message,
         ];
         $this->render("message", $data);
+    }
+
+    private function mapDatabaseKey($formKey)
+    {
+        $mapping = [
+            'id_jeu' => 'id_jeu',
+            'titre_jeu' => 'titre',
+            'date_parution_debut' => 'date_parution_debut',
+            'date_parution_fin' => 'date_parution_fin',
+            'information_date' => 'information_date',
+            'version' => 'version',
+            'nombre_joueurs' => 'nombre_joueurs',
+            'age_min' => 'age_min',
+            'mots_cles' => 'mots_cles'
+        ];
+        return $mapping[$formKey] ?? $formKey;
     }
 
 }
