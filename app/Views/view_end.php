@@ -1,3 +1,4 @@
+<?php require_once "view_begin.php" ?>
 <!-- Pied de page -->
 <footer>
     <div class="colonne">
@@ -8,7 +9,5 @@
         </ul>
     </div>
 </footer>
-</body>
-</html>
 </body>
 </html>

@@ -1,4 +1,7 @@
-<?php require_once "view_begin.php" ?>
+<?php
+error_reporting(E_ERROR | E_PARSE);
+ini_set('display_errors', 0);
+require_once "view_begin.php" ?>
 <br>
 <h1>Voici la liste des jeux correspondant <?php if(isset($_GET['mot_cle'])){echo ('pour ' .'"'.$_GET['mot_cle'].'"');}?> :</h1>
 <br>
