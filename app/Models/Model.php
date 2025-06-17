@@ -191,7 +191,21 @@ class Model
         return $tab;
     }
 
+    public function getLocalisationSalle()
+    {
+        $req = $this->bd->prepare("SELECT DISTINCT salle from localisation");
+        $req->execute();
+        $tab = $req->fetchAll(PDO::FETCH_ASSOC);
+        return $tab;
+    }
 
+    public function getLocalisationEtagere()
+    {
+        $req = $this->bd->prepare("SELECT DISTINCT etagere from localisation");
+        $req->execute();
+        $tab = $req->fetchAll(PDO::FETCH_ASSOC);
+        return $tab;
+    }
 
 
     public function getDateDeSortie()

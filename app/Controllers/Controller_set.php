@@ -148,10 +148,9 @@ class Controller_set extends Controller
 
         // Récupération des listes nécessaires à l'affichage du formulaire
         $data = [
-            "categories" => $m->getIdOfCategories(),
-            "auteurs" => $m->getAuteurs(),
-            "editeurs" => $m->getEditeurs(),
-            "mecanismes" => $m->getMecanismes(),
+            "localisationSalle" => $m->getLocalisationSalle(),
+            "localisationEtagere" => $m->getLocalisationEtagere(),
+            
         ];
 
         // Affichage du formulaire d'ajout de jeu
