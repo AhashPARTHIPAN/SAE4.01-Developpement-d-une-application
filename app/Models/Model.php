@@ -693,6 +693,67 @@ class Model
             return false;
         }
     }
+    
+    // Réserver une boîte de jeu pour un utilisateur
+    public function reserverBoite($id_utilisateur, $id_boite) {
+        // Vérifie si la boîte est déjà empruntée (prêt en cours)
+        $sql = "SELECT 1 FROM pret WHERE id_boite = :id_boite AND date_retour IS NULL";
+        $req = $this->bd->prepare($sql);
+        $req->bindValue(':id_boite', $id_boite, PDO::PARAM_INT);
+        $req->execute();
+        if ($req->fetch()) {
+            return false; // Boîte déjà empruntée
+        }
+        // Insère dans emprunteur si besoin
+        $sql = "INSERT IGNORE INTO emprunteur (emprunteur_id, nom, email) 
+                SELECT utilisateur_id, nom, email FROM utilisateur WHERE utilisateur_id = :id_utilisateur";
+        $req = $this->bd->prepare($sql);
+        $req->bindValue(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
+        $req->execute();
+        // Insère le prêt
+        $sql = "INSERT INTO pret (emprunteur_id, id_boite, date_emprunt) VALUES (:id_utilisateur, :id_boite, CURDATE())";
+        $req = $this->bd->prepare($sql);
+        $req->bindValue(':id_utilisateur', $id_utilisateur, PDO::PARAM_INT);
+        $req->bindValue(':id_boite', $id_boite, PDO::PARAM_INT);
+        return $req->execute();
+    }
+
+    // Récupère l'id_jeu à partir de l'id_boite
+    public function getJeuIdByBoite($id_boite) {
+        $sql = "SELECT jeu_id FROM boite WHERE id_boite = :id_boite";
+        $req = $this->bd->prepare($sql);
+        $req->bindValue(':id_boite', $id_boite, PDO::PARAM_INT);
+        $req->execute();
+        $res = $req->fetch(PDO::FETCH_ASSOC);
+        return $res ? $res['jeu_id'] : null;
+    }
+
+    // Debug : affiche les 5 derniers prêts
+    public function getLastPretsDebug() {
+        $sql = "SELECT * FROM pret ORDER BY id_pret DESC LIMIT 5";
+        $req = $this->bd->prepare($sql);
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Marquer un prêt comme rendu (ajoute la date de retour)
+    public function rendrePret($id_pret) {
+        $sql = "UPDATE pret SET date_retour = CURDATE() WHERE id_pret = :id_pret AND date_retour IS NULL";
+        $req = $this->bd->prepare($sql);
+        $req->bindValue(':id_pret', $id_pret, PDO::PARAM_INT);
+        $req->execute();
+    }
+
+    // Met à jour la salle de la boîte
+    public function updateBoiteSalle($id_boite, $salle) {
+        $sql = "UPDATE boite SET salle = :salle WHERE id_boite = :id_boite";
+        $req = $this->bd->prepare($sql);
+        $req->bindValue(':salle', $salle, PDO::PARAM_STR);
+        $req->bindValue(':id_boite', $id_boite, PDO::PARAM_INT);
+        $req->execute();
+    }
+
+    // Suppression de la méthode updateBoiteLocalisationId et getAllLocalisations
 
     public function logAction($utilisateurId, $action, $details = null)
     {

@@ -1,4 +1,4 @@
-<?php require_once "view_begin.php"; ?>
+<?php require_once "view_begin.php" ?>
 
 
 <section id="connexion_inscription">

@@ -1,4 +1,7 @@
-<?php require_once "view_begin.php"; ?>
+<?php
+error_reporting(E_ERROR | E_PARSE);
+ini_set('display_errors', 0);
+require_once "view_begin.php"; ?>
 
 <section id="monCompte">
     <h1>Mon Compte</h1>
