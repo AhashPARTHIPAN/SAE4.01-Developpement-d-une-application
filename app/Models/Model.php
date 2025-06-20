@@ -755,6 +755,7 @@ class Model
 
     // Suppression de la méthode updateBoiteLocalisationId et getAllLocalisations
 
+
     public function logAction($utilisateurId, $action, $details = null)
     {
         $sql = "INSERT INTO historique (utilisateur_id, action, details)
