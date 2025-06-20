@@ -11,6 +11,7 @@ require_once "view_begin.php" ?>
                 <a href="index.php?controller=administration&action=administrationUtilisateur" class="Bouton">Gestion des utilisateurs</a>
             <?php endif; ?>
             <a href="index.php?controller=historique" class="Bouton">Historique</a>
+            <a href="index.php?controller=exportation&action=exportation" class="Bouton">Exporter les données</a>
         </div>
     <?php endif; ?>
 
