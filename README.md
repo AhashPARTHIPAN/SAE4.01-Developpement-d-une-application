@@ -1,4 +1,3 @@
-
 # SAE4.01 : Développement d'une application
 
 ## Aperçu du projet

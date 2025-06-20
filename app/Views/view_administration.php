@@ -19,7 +19,9 @@ require_once "view_begin.php" ?>
         <div class="admin-section">
             <h2>Gestion des jeux</h2>
             <a href="?controller=set&action=form_add"><button class="Bouton">Ajouter un jeu</button></a>
-            <table>
+            <!-- Barre de recherche -->
+            <input type="text" id="recherche-jeu-admin" placeholder="Rechercher un jeu..." style="margin:10px 0; padding:5px; width:250px;">
+            <table id="table-jeux-admin">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -35,7 +37,8 @@ require_once "view_begin.php" ?>
                             <td><?= htmlspecialchars($jeu['titre']) ?></td>
                             <td><?= htmlspecialchars($jeu['categories']) ?></td>
                             <td>
-                                <a href="?controller=set&action=form_update&id_jeu=<?= $jeu["id_jeu"]?>"><button class="Bouton">Modifier</button></a>
+                                <a href="?controller=set&action=form_update&id_jeu=<?php echo $jeu["id_jeu"]?>"><button class="Bouton">Modifier</button></a>
+                                <!-- Bouton supprimer avec confirmation -->
                                 <button class="Bouton Noir" onclick="confirmSuppression(<?= $jeu['id_jeu'] ?>)">Supprimer</button>
                             </td>
                         </tr>
@@ -52,5 +55,16 @@ require_once "view_begin.php" ?>
                 window.location.href = "?controller=set&action=remove&id_jeu=" + idJeu;
             }
         }
+        // Filtre de recherche plus court pour la table des jeux
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('recherche-jeu-admin');
+            const rows = document.querySelectorAll('#table-jeux-admin tbody tr');
+            input.addEventListener('input', function() {
+                const filtre = input.value.toLowerCase();
+                rows.forEach(row => {
+                    row.style.display = row.textContent.toLowerCase().includes(filtre) ? '' : 'none';
+                });
+            });
+        });
     </script>
 <?php require_once "view_end.php" ?>
