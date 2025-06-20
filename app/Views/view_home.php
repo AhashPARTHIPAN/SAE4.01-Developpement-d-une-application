@@ -1,4 +1,5 @@
-<?php require_once "view_begin.php" ?>
+<?php
+require_once "view_begin.php" ?>
 
 <section id="presentation">
     <?php if (isset($_SESSION['utilisateur'])): ?>

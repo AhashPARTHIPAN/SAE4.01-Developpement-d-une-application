@@ -1,3 +1,5 @@
+<?php
+require_once "view_begin.php" ?>
 <table class="table_rendu">
     <tr> <th>Titre</th> <th>Mots clés</th> <th>Date de parution</th></tr>
     <?php foreach ($liste as $jeu): ?>
