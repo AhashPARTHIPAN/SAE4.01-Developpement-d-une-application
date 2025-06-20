@@ -743,6 +743,32 @@ class Model
 
     // Suppression de la méthode updateBoiteLocalisationId et getAllLocalisations
 
+    // --- AJOUT HISTORIQUE ---
+    public function logAction($utilisateurId, $action, $details = null)
+    {
+        $sql = "INSERT INTO historique (utilisateur_id, action, details)
+                VALUES (:uid, :act, :det)";
+        $stmt = $this->bd->prepare($sql);
+        $stmt->execute([
+            ':uid' => $utilisateurId,
+            ':act' => $action,
+            ':det' => $details
+        ]);
+    }
+
+    public function getHistorique($limit = 100)
+    {
+        $sql = "SELECT h.id, u.nom, h.action, h.details, h.date_action
+                FROM historique h
+                JOIN utilisateur u ON h.utilisateur_id = u.utilisateur_id
+                ORDER BY h.date_action DESC
+                LIMIT :lim";
+        $stmt = $this->bd->prepare($sql);
+        $stmt->bindValue(':lim', (int) $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 
 ?>

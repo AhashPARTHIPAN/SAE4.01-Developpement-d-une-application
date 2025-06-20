@@ -1,4 +1,5 @@
-<?php require_once "view_begin.php" ?>
+<?php
+require_once "view_begin.php" ?>
 
 
 <div class="container">
@@ -21,7 +22,7 @@
             <div class="admin-section">
                 <h2>Gestion des jeux</h2>
                 <a href="?controller=set&action=form_add"><button class="Bouton">Ajouter un jeu</button></a>
-                <table>
+                <table id="tableJeux">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -38,10 +39,9 @@
                                 <td><?= htmlspecialchars($jeu['categories']) ?></td>
                                 <td>
                                     <a href="?controller=set&action=form_update&id_jeu=<?php echo $jeu["id_jeu"]?>"><button class="Bouton">Modifier</button></a>
-                                    
                                     <!-- Bouton supprimer avec confirmation -->
                                     <button class="Bouton Noir" onclick="confirmSuppression(<?= $jeu['id_jeu'] ?>)">Supprimer</button>
-                            </td>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -53,7 +53,6 @@
         <script>
             function confirmSuppression(idJeu) {
                 if (confirm("Êtes-vous sûr de vouloir supprimer ce jeu ?")) {
-                    // Rediriger vers la suppression si l'utilisateur confirme
                     window.location.href = "?controller=set&action=remove&id_jeu=" + idJeu;
                 }
             }

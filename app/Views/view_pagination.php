@@ -1,7 +1,5 @@
 <?php
-error_reporting(E_ERROR | E_PARSE);
-ini_set('display_errors', 0);
-require "view_begin.php"?>
+require_once "view_begin.php" ?>
 
 <h1 id="presentation">Liste des jeux - Page <?= $active ?></h1>
 
