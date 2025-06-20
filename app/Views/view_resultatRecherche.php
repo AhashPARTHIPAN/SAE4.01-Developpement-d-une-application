@@ -1,4 +1,5 @@
-<?php require_once "view_begin.php" ?>
+<?php
+require_once "view_begin.php" ?>
 <br>
 <h1>Voici la liste des jeux correspondant <?php if(isset($_GET['mot_cle'])){echo ('pour ' .'"'.$_GET['mot_cle'].'"');}?> :</h1>
 <br>

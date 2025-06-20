@@ -1,4 +1,4 @@
-<?php require "view_begin.php"; ?>
+<?php require_once "view_begin.php" ?>
 
 <h1> Modification du jeu </h1>
 

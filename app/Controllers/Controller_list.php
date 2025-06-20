@@ -57,33 +57,31 @@ public function action_rechercheParMotCle() {
 }
     public function action_boiteJeu() {
         $model = Model::getModel();
-        
         if (isset($_GET["id_jeu"]) and preg_match("/^[1-9]\d*$/", $_GET["id_jeu"])) {
-            // Récupération de toutes les boîtes associées au jeu
+            // Message de réservation depuis la session
+            $message_resa = null;
+            if (isset($_SESSION['message_resa'])) {
+                $message_resa = $_SESSION['message_resa'];
+                unset($_SESSION['message_resa']);
+            }
             $boitesDisponibles = $model->getBoitesDisponibles($_GET["id_jeu"]);
-            
             if ($boitesDisponibles === false || empty($boitesDisponibles)) {
                 $this->action_error("Aucune boîte disponible pour ce jeu.");
-                return; // Arrêter l'exécution si aucune boîte n'est trouvée
+                return;
             }
-            
-            // Récupération des informations sur le jeu
             $jeuInfo = $model->getJeuParId($_GET["id_jeu"]);
             if ($jeuInfo === false) {
                 $this->action_error("Aucun jeu trouvé avec cet identifiant.");
                 return;
             }
-    
-            // Récupération des jeux similaires
             $jeuxSimilaires = $model->getJeuSimilaire($_GET["id_jeu"]);
-            
             $data = [
-                'jeu' => $jeuInfo, // Informations sur le jeu
-                'boites' => $boitesDisponibles, // Toutes les boîtes disponibles
-                'nb_exemplaires' => count($boitesDisponibles), // Nombre de boîtes disponibles
-                'jeux_similaires' => $jeuxSimilaires // Jeux similaires
+                'jeu' => $jeuInfo,
+                'boites' => $boitesDisponibles,
+                'nb_exemplaires' => count($boitesDisponibles),
+                'jeux_similaires' => $jeuxSimilaires,
+                'message_resa' => $message_resa
             ];
-    
             $this->render("boiteJeu", $data);
         } else {
             $this->action_error("Identifiant de jeu invalide.");
@@ -139,6 +137,44 @@ public function action_rechercheParMotCle() {
 
         //Affichage de la vue
         $this->render("pagination", $data);
+    }
+     public function action_reserverBoite() {
+        if (!isset($_SESSION['utilisateur'])) {
+            header('Location: index.php?controller=connexion_inscription&action=afficher&erreur=Veuillez vous connecter.');
+            exit;
+        }
+        if (!isset($_POST['id_boite'])) {
+            $this->action_error("Aucune boîte sélectionnée.");
+            return;
+        }
+        $id_utilisateur = $_SESSION['utilisateur']['id'];
+        $id_boite = $_POST['id_boite'];
+        $model = Model::getModel();
+        $ok = $model->reserverBoite($id_utilisateur, $id_boite);
+        $jeu_id = $model->getJeuIdByBoite($id_boite);
+        // Stocker le message en session pour affichage après redirection
+        if ($ok) {
+            $_SESSION['message_resa'] = "Réservation réussie !";
+        } else {
+            $_SESSION['message_resa'] = "Erreur : ce jeu est déjà réservé ou la boîte n'est plus disponible.";
+        }
+        // Rediriger vers la page du jeu (PRG pattern)
+        header('Location: index.php?controller=list&action=boiteJeu&id_jeu=' . $jeu_id);
+        exit;
+    }
+
+    public function action_suiviPrets() {
+        if (!isset($_SESSION['utilisateur']) || ($_SESSION['utilisateur']['role'] != 'Gestionnaire' && $_SESSION['utilisateur']['role'] != 'Admin')) {
+            header('Location: index.php');
+            exit;
+        }
+        $model = Model::getModel();
+        // Traitement du retour de boîte
+        if (isset($_POST['rendre']) && isset($_POST['id_pret'])) {
+            $model->rendrePret($_POST['id_pret']);
+        }
+        $prets = $model->getReservations();
+        $this->render("suivi_prets", ["prets" => $prets]);
     }
 
    
