@@ -72,13 +72,13 @@ class Controller_set extends Controller
             foreach ($infos as $k => $v) {
                 $dbKey = $this->mapDatabaseKey($k);
                 if (isset($ancien[$dbKey]) && $ancien[$dbKey] !== $v) {
-                    $changes[] = "$dbKey=" . $ancien[$dbKey] . "->" . $v;
+                    $changes[] = ['field' => $dbKey, 'old' => $ancien[$dbKey], 'new' => $v];
                 }
             }
-            $detail = 'id=' . $_POST['id_jeu'];
-            if (!empty($changes)) {
-                $detail .= '; ' . implode('; ', $changes);
-            }
+            $detail = json_encode([
+                'id' => $_POST['id_jeu'],
+                'changes' => $changes
+            ]);
             $m->logAction(
                 $_SESSION['utilisateur']['id'],
                 'modification_jeu',
@@ -111,10 +111,12 @@ class Controller_set extends Controller
             $jeuInfo = $m->getJeuParId($id);
             $suppression = $m->removeJeuParId($id);
             if ($suppression) {
-                $detail = 'id=' . $id;
-                if ($jeuInfo) {
-                    $detail .= '; titre=' . $jeuInfo['titre'];
-                }
+                $detail = json_encode([
+                    'id' => $id,
+                    'jeu' => $jeuInfo ? [
+                        'titre' => $jeuInfo['titre']
+                    ] : null
+                ]);
                 $m->logAction(
                     $_SESSION['utilisateur']['id'],
                     'suppression_jeu',
@@ -235,7 +237,10 @@ class Controller_set extends Controller
             }
 
             // Si tout est bon, succès
-            $detail = 'id=' . $jeu_id . '; titre=' . $_POST['titre_jeu'];
+            $detail = json_encode([
+                'id' => $jeu_id,
+                'titre' => $_POST['titre_jeu']
+            ]);
             $m->logAction(
                 $_SESSION['utilisateur']['id'],
                 'ajout_jeu',
@@ -303,18 +308,18 @@ class Controller_set extends Controller
             $m->updateUtilisateur($id, $nom, $email, $role);
             $changes = [];
             if ($ancien['nom'] != $nom) {
-                $changes[] = 'nom=' . $ancien['nom'] . '->' . $nom;
+                $changes[] = ['field' => 'nom', 'old' => $ancien['nom'], 'new' => $nom];
             }
             if ($ancien['email'] != $email) {
-                $changes[] = 'email=' . $ancien['email'] . '->' . $email;
+                $changes[] = ['field' => 'email', 'old' => $ancien['email'], 'new' => $email];
             }
             if ($ancien['role'] != $role) {
-                $changes[] = 'role=' . $ancien['role'] . '->' . $role;
+                $changes[] = ['field' => 'role', 'old' => $ancien['role'], 'new' => $role];
             }
-            $detail = 'id=' . $id;
-            if (!empty($changes)) {
-                $detail .= '; ' . implode('; ', $changes);
-            }
+            $detail = json_encode([
+                'id' => $id,
+                'changes' => $changes
+            ]);
             $m->logAction(
                 $_SESSION['utilisateur']['id'],
                 'modification_utilisateur',
@@ -344,10 +349,14 @@ class Controller_set extends Controller
             $util = $m->getUtilisateurParId($id);
             $suppression = $m->removeUserParId($id);
             if ($suppression) {
-                $detail = 'id=' . $id;
-                if ($util) {
-                    $detail .= '; nom=' . $util['nom'] . '; email=' . $util['email'] . '; role=' . $util['role'];
-                }
+                $detail = json_encode([
+                    'id' => $id,
+                    'utilisateur' => $util ? [
+                        'nom' => $util['nom'],
+                        'email' => $util['email'],
+                        'role' => $util['role']
+                    ] : null
+                ]);
                 $m->logAction(
                     $_SESSION['utilisateur']['id'],
                     'suppression_utilisateur',
