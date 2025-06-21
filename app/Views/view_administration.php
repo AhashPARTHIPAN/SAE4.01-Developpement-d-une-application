@@ -21,6 +21,7 @@
             <div class="admin-section">
                 <h2>Gestion des jeux</h2>
                 <a href="?controller=set&action=form_add"><button class="Bouton">Ajouter un jeu</button></a>
+                <a href="?controller=administration&action=paginationJeux" class="Bouton">Voir tous les jeux (paginé)</a>
                 <table>
                     <thead>
                         <tr>
@@ -46,6 +47,31 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                
+                <!-- Pagination -->
+                <?php if (isset($nb_total_pages) && $nb_total_pages > 1): ?>
+                    <div class="listePages">
+                        <p>Pages :</p>
+                        <?php if ($active > 1): ?>
+                            <a href="?controller=administration&action=administration&start=<?= $active - 1 ?>">
+                                <img class="icone" src="Content/img/previous-icon.png" alt="Previous" />
+                            </a>
+                        <?php endif; ?>
+
+                        <?php for($p = $debut; $p <= $fin; $p++): ?>
+                            <a class="<?= $p == $active ? "active" : "" ?>" 
+                               href="?controller=administration&action=administration&start=<?= $p ?>">
+                                <?= $p ?>
+                            </a>
+                        <?php endfor; ?>
+
+                        <?php if ($active < $nb_total_pages): ?>
+                            <a href="?controller=administration&action=administration&start=<?= $active + 1 ?>">
+                                <img class="icone" src="Content/img/next-icon.png" alt="Next" />
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
 
