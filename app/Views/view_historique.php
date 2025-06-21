@@ -39,23 +39,83 @@
                         </td>
                         <td class="details-cell">
                             <?php
-                            $details = explode(';', $log['details']);
-                            foreach ($details as $detail) {
-                                $parts = explode('=', trim($detail));
-                                if (count($parts) === 2) {
-                                    $key = trim($parts[0]);
-                                    $value = trim($parts[1]);
+                            // Essayer de décoder comme JSON d'abord
+                            $detailsData = json_decode($log['details'], true);
+
+                            if ($detailsData !== null) {
+                                // Format JSON
+                                if (isset($detailsData['id'])) {
                                     echo '<div class="detail-item">';
-                                    echo '<span class="detail-key">' . htmlspecialchars($key) . ':</span> ';
-                                    if (strpos($value, '->') !== false) {
-                                        list($old, $new) = explode('->', $value);
-                                        echo '<span class="old-value">' . htmlspecialchars($old) . '</span>';
-                                        echo '<span class="arrow">→</span>';
-                                        echo '<span class="new-value">' . htmlspecialchars($new) . '</span>';
-                                    } else {
-                                        echo htmlspecialchars($value);
-                                    }
+                                    echo '<span class="detail-key">ID:</span> ' . htmlspecialchars($detailsData['id']);
                                     echo '</div>';
+                                }
+
+                                if (isset($detailsData['titre'])) {
+                                    echo '<div class="detail-item">';
+                                    echo '<span class="detail-key">Titre:</span> ' . htmlspecialchars($detailsData['titre']);
+                                    echo '</div>';
+                                }
+
+                                if (isset($detailsData['utilisateur'])) {
+                                    $util = $detailsData['utilisateur'];
+                                    if (isset($util['nom'])) {
+                                        echo '<div class="detail-item">';
+                                        echo '<span class="detail-key">Nom:</span> ' . htmlspecialchars($util['nom']);
+                                        echo '</div>';
+                                    }
+                                    if (isset($util['email'])) {
+                                        echo '<div class="detail-item">';
+                                        echo '<span class="detail-key">Email:</span> ' . htmlspecialchars($util['email']);
+                                        echo '</div>';
+                                    }
+                                    if (isset($util['role'])) {
+                                        echo '<div class="detail-item">';
+                                        echo '<span class="detail-key">Rôle:</span> ' . htmlspecialchars($util['role']);
+                                        echo '</div>';
+                                    }
+                                }
+
+                                if (isset($detailsData['jeu'])) {
+                                    $jeu = $detailsData['jeu'];
+                                    if (isset($jeu['titre'])) {
+                                        echo '<div class="detail-item">';
+                                        echo '<span class="detail-key">Titre:</span> ' . htmlspecialchars($jeu['titre']);
+                                        echo '</div>';
+                                    }
+                                }
+
+                                if (isset($detailsData['changes']) && is_array($detailsData['changes'])) {
+                                    foreach ($detailsData['changes'] as $change) {
+                                        if (isset($change['field']) && isset($change['old']) && isset($change['new'])) {
+                                            echo '<div class="detail-item">';
+                                            echo '<span class="detail-key">' . htmlspecialchars($change['field']) . ':</span> ';
+                                            echo '<span class="old-value">' . htmlspecialchars($change['old']) . '</span>';
+                                            echo '<span class="arrow">→</span>';
+                                            echo '<span class="new-value">' . htmlspecialchars($change['new']) . '</span>';
+                                            echo '</div>';
+                                        }
+                                    }
+                                }
+                            } else {
+                                // Ancien format avec points-virgules (pour la compatibilité)
+                                $details = explode(';', $log['details']);
+                                foreach ($details as $detail) {
+                                    $parts = explode('=', trim($detail));
+                                    if (count($parts) === 2) {
+                                        $key = trim($parts[0]);
+                                        $value = trim($parts[1]);
+                                        echo '<div class="detail-item">';
+                                        echo '<span class="detail-key">' . htmlspecialchars($key) . ':</span> ';
+                                        if (strpos($value, '->') !== false) {
+                                            list($old, $new) = explode('->', $value);
+                                            echo '<span class="old-value">' . htmlspecialchars($old) . '</span>';
+                                            echo '<span class="arrow">→</span>';
+                                            echo '<span class="new-value">' . htmlspecialchars($new) . '</span>';
+                                        } else {
+                                            echo htmlspecialchars($value);
+                                        }
+                                        echo '</div>';
+                                    }
                                 }
                             }
                             ?>
