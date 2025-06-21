@@ -10,10 +10,23 @@ Voici un aperçu de l'application :
 ## Contexte
 L'Université Sorbonne Paris Nord possède une collection exceptionnelle de plus de 17 000 jeux de société, certains datant du XIXe siècle. Ce projet vise à concevoir une application web accompagnée de scripts pour gérer, organiser, et valoriser cette collection.
 
+
+## Nouveaux ajouts et améliorations
+
+Au cours du projet, plusieurs ajouts et améliorations ont été réalisés afin de le finaliser :
+
+- Refonte du style du site
+- Ajustement de la base de données pour la gestion de l’historique
+- Export de données
+- Suivi des prêts
+- Ajout de la localisation physique
+- Ajout de filtre de recherche pour le suivi de prêt
+- Ajout d’une barre de recherche dans le panneau d’administration
+
 ## Fonctionnalités principales
 - **Nettoyage des données** : Correction des incohérences dans les fichiers Excel.
 - **Base de données relationnelle** : Organisation structurée des informations.
-- **Interface web** : Recherche avancée, gestion des prêts, et gestion de l'inventaire.
+- **Interface web** : Recherche avancée, gestion des prêts, et gestion de l’inventaire.
 - **Scripts Python** : Manipulation automatisée des données.
 
 --- 
@@ -116,7 +129,7 @@ Décompressez ou placez le projet dans un répertoire local.
 
 ## Équipe du projet
 - **[Lasry BESKIWIN](https://github.com/Lasryy)**
-- **[Rania Bousfiha](https://github.com/rania212)**
+- **[Rania BOUSFIHA](https://github.com/rania212)**
 - **[Safiya NGUYEN](https://github.com/safiya-ng)**
 - **[Ahash PARTHIPAN](https://github.com/AhashPARTHIPAN)**
 - **[Jules RICHARDOT](https://github.com/JulesRichardot)**
