@@ -191,7 +191,33 @@ class Model
         return $tab;
     }
 
+    public function getLocalisationSalle()
+    {
+        $req = $this->bd->prepare("SELECT DISTINCT salle from localisation");
+        $req->execute();
+        $tab = $req->fetchAll(PDO::FETCH_ASSOC);
+        return $tab;
+    }
 
+    public function getLocalisationEtagere()
+    {
+        $req = $this->bd->prepare("SELECT DISTINCT etagere from localisation");
+        $req->execute();
+        $tab = $req->fetchAll(PDO::FETCH_ASSOC);
+        return $tab;
+    }
+
+    public function getIdLocalisation($salle, $etagere){
+        $req = $this->bd->prepare("SELECT DISTINCT localisation_id from localisation where salle=:salle and etagere=:etagere");
+        $req->bindParam(":salle", $salle);
+        $req->bindParam(":etagere", $etagere);
+        $req->execute();
+        $tab = $req->fetch(PDO::FETCH_ASSOC);
+        if ($tab){
+        return $tab["localisation_id"];}
+        else{return "";}
+
+    }
 
 
     public function getDateDeSortie()
@@ -573,6 +599,18 @@ class Model
 
             // Exécuter la requête
             if ($stmt->execute()) {
+                $jeu_id = $this->getDernierJeu();
+                if($infos['localisation_id'] !== ''){
+                $query2 = "INSERT INTO boite (jeu_id, localisation_id) 
+                      VALUES ($jeu_id, :localisation)";
+                $stmt2 = $this->bd->prepare($query2);
+                
+                
+                $stmt2->bindParam(':localisation', $infos['localisation_id']);
+                $stmt2->execute();}
+                else{
+                    return false;
+            }
                 // Retourner l'ID du jeu inséré
                 return $this->bd->lastInsertId();
             } else {
@@ -694,6 +732,12 @@ class Model
         }
     }
     
+    public function getDernierJeu(){
+        $req = $this->bd->prepare("SELECT id_jeu from jeu order by id_jeu desc LIMIT 1");
+        $req->execute();
+        $tab = $req->fetch(PDO::FETCH_ASSOC);
+        return $tab["id_jeu"];
+    }
     // Réserver une boîte de jeu pour un utilisateur
     public function reserverBoite($id_utilisateur, $id_boite) {
         // Vérifie si la boîte est déjà empruntée (prêt en cours)

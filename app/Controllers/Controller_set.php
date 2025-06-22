@@ -148,10 +148,9 @@ class Controller_set extends Controller
 
         // Récupération des listes nécessaires à l'affichage du formulaire
         $data = [
-            "categories" => $m->getIdOfCategories(),
-            "auteurs" => $m->getAuteurs(),
-            "editeurs" => $m->getEditeurs(),
-            "mecanismes" => $m->getMecanismes(),
+            "localisationSalle" => $m->getLocalisationSalle(),
+            "localisationEtagere" => $m->getLocalisationEtagere(),
+            
         ];
 
         // Affichage du formulaire d'ajout de jeu
@@ -165,7 +164,7 @@ class Controller_set extends Controller
         // Test si les informations nécessaires sont fournies
         if (isset($_POST["titre_jeu"]) && !preg_match("/^ *$/", $_POST["titre_jeu"])) {
             $m = Model::getModel();
-
+        
             // Vérification des autres champs, ceux qui ne sont pas required doivent être gérés comme null si vides
             $infos = [];
             $noms = [
@@ -177,14 +176,17 @@ class Controller_set extends Controller
                 'version',
                 'nombre_joueurs',
                 'age_min',
-                'mots_cles'
+                'mots_cles',
+                'salle',
+                'etagere'
             ];
 
             foreach ($noms as $v) {
                 // Vérifie si la valeur existe et si elle n'est pas vide
                 $infos[$v] = isset($_POST[$v]) && !preg_match("/^ *$/", $_POST[$v]) ? $_POST[$v] : null;
             }
-
+            $loc = $m->getIdLocalisation($infos['salle'], $infos['etagere']);
+            $infos['localisation_id'] = $loc;
             // Ajout du jeu dans la base
             $jeu_id = $m->addJeu($infos);
             if ($jeu_id === false) {
