@@ -29,25 +29,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($reservations as $reservation): ?>
+                <?php foreach ($prets as $pret): ?>
                     <?php
                         $search = isset($_GET['search']) ? strtolower($_GET['search']) : '';
-                        $jeu = strtolower($reservation['nom_jeu']);
-                        $utilisateur = strtolower($reservation['utilisateur']);
+                        $jeu = strtolower($pret['nom_jeu']);
+                        $utilisateur = strtolower($pret['utilisateur']);
                         if ($search && strpos($jeu, $search) === false && strpos($utilisateur, $search) === false) continue;
-                        $isRendu = !empty($reservation['date_retour']);
+                        $isRendu = !empty($pret['date_retour']);
                     ?>
                     <tr class="resa-row<?= $isRendu ? ' resa-rendue' : '' ?>">
-                        <td><?= htmlspecialchars($reservation['id_reservation']) ?></td>
-                        <td><?= htmlspecialchars($reservation['nom_jeu']) ?></td>
-                        <td><?= htmlspecialchars($reservation['utilisateur']) ?></td>
-                        <td><?= htmlspecialchars($reservation['date_emprunt']) ?></td>
-                        <td><?= $reservation['date_retour'] ? htmlspecialchars($reservation['date_retour']) : 'En cours' ?></td>
-                        <td><?= htmlspecialchars($reservation['statut']) ?></td>
+                        <td><?= htmlspecialchars($pret['id_reservation']) ?></td>
+                        <td><?= htmlspecialchars($pret['nom_jeu']) ?></td>
+                        <td><?= htmlspecialchars($pret['utilisateur']) ?></td>
+                        <td><?= htmlspecialchars($pret['date_emprunt']) ?></td>
+                        <td><?= $pret['date_retour'] ? htmlspecialchars($pret['date_retour']) : 'En cours' ?></td>
+                        <td><?= htmlspecialchars($pret['statut']) ?></td>
                         <td>
-                            <?php if (!$reservation['date_retour']): ?>
+                            <?php if (!$pret['date_retour']): ?>
                                 <form method="post" style="display:inline;">
-                                    <input type="hidden" name="id_reservation" value="<?= htmlspecialchars($reservation['id_reservation']) ?>">
+                                    <input type="hidden" name="id_reservation" value="<?= htmlspecialchars($pret['id_reservation']) ?>">
                                     <button type="submit" name="rendre" class="btn-rendre Bouton">Rendre</button>
                                 </form>
                             <?php endif; ?>
