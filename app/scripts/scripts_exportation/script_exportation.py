@@ -128,7 +128,7 @@ for row in rows:
 df = pd.read_sql(query, db)
 
 # Chemin du fichier Excel (il faut le lancer depuis path/data/scripts_exportation)
-output_path = "../data/export_jeux1.xlsx"
+output_path = "scripts/data/export_jeux.xlsx"
 
 # Export vers Excel
 df.to_excel(output_path, index=False)
