@@ -77,11 +77,20 @@ class Controller_administration extends Controller {
         }
 
         $model = Model::getModel();
+
+        // Traitement du retour de prêt
+        if (isset($_POST['rendre']) && !empty($_POST['id_pret'])) {
+            $model->rendrePret($_POST['id_pret']);
+            // Redirection pour éviter le repost du formulaire
+            header('Location: index.php?controller=administration&action=administrationReservation');
+            exit;
+        }
+
         // Récupération des données et render
         if ($role === 'Gestionnaire' || $role === 'Admin' ) {
             $data = [
                 'jeux' => $model->getJeux(),
-                'reservations' => $model->getReservations(),
+                'prets' => $model->getReservations(),
                 'role' => $role
             ];
         }

@@ -15,8 +15,7 @@
         <nav class="nav-links">
             <a href="index.php" class="nav-link">Accueil</a>
             <a href="?controller=list&action=pagination" class="nav-link">Découvrir</a>
-	        <a href="?controller=recherche&action=rechercheAvancee" class="nav-link">Recherche avancée</a>
-            
+            <a href="?controller=recherche&action=rechercheAvancee" class="nav-link">Recherche avancée</a>
             <!-- Vérifie si l'utilisateur est connecté -->
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <a href="?controller=monCompte" class="nav-link">Mon Compte</a>

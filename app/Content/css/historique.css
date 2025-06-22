@@ -1,0 +1,143 @@
+.historique-container {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.historique-info {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    color: #666;
+}
+
+.historique-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.historique-table th {
+    background-color: #f5f5f5;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    font-weight: bold;
+    color: #333;
+}
+
+.historique-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+}
+
+.historique-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+.action-cell {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.details-cell {
+    line-height: 1.6;
+}
+
+.detail-item {
+    margin-bottom: 8px;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.detail-key {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.old-value {
+    color: #e74c3c;
+    text-decoration: line-through;
+    margin-right: 8px;
+}
+
+.new-value {
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.arrow {
+    color: #7f8c8d;
+    margin: 0 8px;
+}
+
+.date-cell {
+    white-space: nowrap;
+    color: #666;
+}
+
+.user-cell {
+    font-weight: 500;
+    color: #34495e;
+}
+
+.action-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.action-modification {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.action-suppression {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.action-ajout {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-link {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.page-link:hover {
+    background-color: #f5f5f5;
+    border-color: #ccc;
+}
+
+.page-link.active {
+    background-color: #1976d2;
+    color: white;
+    border-color: #1976d2;
+}
+
+.page-dots {
+    color: #666;
+    padding: 0 4px;
+} 

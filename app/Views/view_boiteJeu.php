@@ -2,6 +2,11 @@
 <main>
     <!-- Section principale -->
     <div class="container">
+        <?php if (!empty($message_resa)): ?>
+            <div class="alert-success" style="color: green; font-weight: bold; margin-bottom: 1em;">
+                <?= htmlspecialchars($message_resa) ?>
+            </div>
+        <?php endif; ?>
         <!-- Colonne des détails -->
         <div class="details-jeu">
             <h1 class="titre"><?= htmlspecialchars($jeu['titre']) ?></h1>
@@ -11,7 +16,14 @@
                     <div class="boite">
                         <p>État : <?= htmlspecialchars($boite['etat']) ?></p>
                         <p>Localisation : Salle <?= htmlspecialchars($boite['salle']) ?></p>
-                        <button class="reserve-button">Réserver</button>
+                        <?php if ($boite['disponible'] ?? true): ?>
+                            <form method="post" action="index.php?controller=list&action=reserverBoite">
+                                <input type="hidden" name="id_boite" value="<?= htmlspecialchars($boite['id_boite']) ?>">
+                                <button type="submit" class="reserve-button">Réserver</button>
+                            </form>
+                        <?php else: ?>
+                            <span style="color: red; font-weight: bold;">Déjà réservée</span>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             </div>

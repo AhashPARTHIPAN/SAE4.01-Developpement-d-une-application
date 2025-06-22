@@ -3,34 +3,60 @@
 <div class="container">
     <h1>Gestion des réservations</h1>
 
-<?php if ($role === 'Admin' || $role === 'Gestionnaire'): ?>
-            <!-- Gestion des réservations -->
-            <div class="admin-section">
-                <h2>Gestion des réservations</h2>
+    <!-- Formulaire de recherche -->
+    <form method="get" style="margin-bottom: 1em;">
+        <input type="hidden" name="controller" value="administration">
+        <input type="hidden" name="action" value="administrationReservation">
+        <input type="text" name="search" placeholder="Rechercher par jeu ou utilisateur" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
+        <button type="submit" class="Bouton">Rechercher</button>
+    </form>
+    <button id="toggleRendues" style="margin-bottom:1em;" class="Bouton">Masquer les réservations rendues</button>
+
+    <?php if ($role === 'Admin' || $role === 'Gestionnaire'): ?>
+        <div class="admin-section">
+            <h2>Liste des réservations</h2>
             <a href="?controller=administration&action=paginationReservations" class="Bouton">Voir toutes les réservations (paginé)</a>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nom du jeu</th>
-                            <th>Utilisateur</th>
-                            <th>Date</th>
-                            <th>Statut</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($reservations as $reservation): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($reservation['id_reservation']) ?></td>
-                                <td><?= htmlspecialchars($reservation['nom_jeu']) ?></td>
-                                <td><?= htmlspecialchars($reservation['utilisateur']) ?></td>
-                                <td><?= htmlspecialchars($reservation['date_reservation']) ?></td>
-                                <td><?= htmlspecialchars($reservation['statut']) ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            
+            <table id="tableResa">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom du jeu</th>
+                        <th>Utilisateur</th>
+                        <th>Date d'emprunt</th>
+                        <th>Date de retour</th>
+                        <th>Statut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($reservations as $reservation): ?>
+                    <?php
+                        $search = isset($_GET['search']) ? strtolower($_GET['search']) : '';
+                        $jeu = strtolower($reservation['nom_jeu']);
+                        $utilisateur = strtolower($reservation['utilisateur']);
+                        if ($search && strpos($jeu, $search) === false && strpos($utilisateur, $search) === false) continue;
+                        $isRendu = !empty($reservation['date_retour']);
+                    ?>
+                    <tr class="resa-row<?= $isRendu ? ' resa-rendue' : '' ?>">
+                        <td><?= htmlspecialchars($reservation['id_reservation']) ?></td>
+                        <td><?= htmlspecialchars($reservation['nom_jeu']) ?></td>
+                        <td><?= htmlspecialchars($reservation['utilisateur']) ?></td>
+                        <td><?= htmlspecialchars($reservation['date_emprunt']) ?></td>
+                        <td><?= $reservation['date_retour'] ? htmlspecialchars($reservation['date_retour']) : 'En cours' ?></td>
+                        <td><?= htmlspecialchars($reservation['statut']) ?></td>
+                        <td>
+                            <?php if (!$reservation['date_retour']): ?>
+                                <form method="post" style="display:inline;">
+                                    <input type="hidden" name="id_reservation" value="<?= htmlspecialchars($reservation['id_reservation']) ?>">
+                                    <button type="submit" name="rendre" class="btn-rendre Bouton">Rendre</button>
+                                </form>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+
             <!-- Pagination -->
             <?php if (isset($nb_total_pages) && $nb_total_pages > 1): ?>
                 <div class="listePages">
@@ -43,7 +69,7 @@
 
                     <?php for($p = $debut; $p <= $fin; $p++): ?>
                         <a class="<?= $p == $active ? "active" : "" ?>" 
-                           href="?controller=administration&action=administrationReservation&start=<?= $p ?>">
+                            href="?controller=administration&action=administrationReservation&start=<?= $p ?>">
                             <?= $p ?>
                         </a>
                     <?php endfor; ?>
@@ -55,8 +81,21 @@
                     <?php endif; ?>
                 </div>
             <?php endif; ?>
-            </div>
-        <?php endif; ?>
-    </div>
+        </div>
+    <?php endif; ?>
+</div>
+
+<script>
+const btn = document.getElementById('toggleRendues');
+let renduesCachees = false;
+btn.addEventListener('click', function() {
+    const rows = document.querySelectorAll('.resa-rendue');
+    renduesCachees = !renduesCachees;
+    rows.forEach(row => {
+        row.style.display = renduesCachees ? 'none' : '';
+    });
+    btn.textContent = renduesCachees ? 'Afficher les réservations rendues' : 'Masquer les réservations rendues';
+});
+</script>
 
 <?php require_once "view_end.php" ?>

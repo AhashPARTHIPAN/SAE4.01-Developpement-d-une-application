@@ -1,4 +1,5 @@
-<?php require_once "view_begin.php" ?>
+<?php
+require_once "view_begin.php" ?>
 <div class="container">
     <h1>Recherche Avancée</h1>
     <form class="recherche-avancee" action="index.php" method="GET">
