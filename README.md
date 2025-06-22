@@ -296,7 +296,7 @@ SAE4.01-Developpement-d-une-application-develop/
 
 ## 📄 Licence
 
-Ce projet est développé dans le cadre du cours SAE4.01 de l'Université Sorbonne Paris Nord.
+Ce projet est développé dans le cadre de la SAE4.01 de l'Université Sorbonne Paris Nord.
 
 ---
 
