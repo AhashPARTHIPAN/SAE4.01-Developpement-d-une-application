@@ -22,6 +22,7 @@ require_once "view_begin.php" ?>
             <a href="?controller=set&action=form_add"><button class="Bouton">Ajouter un jeu</button></a>
             <!-- Barre de recherche -->
             <input type="text" id="recherche-jeu-admin" placeholder="Rechercher un jeu..." style="margin:10px 0; padding:5px; width:250px;">
+            <h1 id="presentation">Liste des jeux - Page <?= $active ?></h1>
             <table id="table-jeux-admin">
                 <thead>
                     <tr>
@@ -32,20 +33,34 @@ require_once "view_begin.php" ?>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($jeux as $jeu): ?>
+                    <?php foreach ($liste as $jeu): ?>
                         <tr>
                             <td><?= htmlspecialchars($jeu['id_jeu']) ?></td>
                             <td><?= htmlspecialchars($jeu['titre']) ?></td>
                             <td><?= htmlspecialchars($jeu['categories']) ?></td>
                             <td>
-                                <a href="?controller=set&action=form_update&id_jeu=<?php echo $jeu["id_jeu"]?>"><button class="Bouton">Modifier</button></a>
-                                <!-- Bouton supprimer avec confirmation -->
+                                <a href="?controller=set&action=form_update&id_jeu=<?= $jeu["id_jeu"] ?>"><button class="Bouton">Modifier</button></a>
                                 <button class="Bouton Noir" onclick="confirmSuppression(<?= $jeu['id_jeu'] ?>)">Supprimer</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+        </div>
+
+        <div class="listePages">
+            <p> Pages: </p>
+            <?php if ($active > 1) : ?>
+                <a href="?controller=administration&action=administration&start=<?=$active - 1 ?>"> <img class="icone" src="Content/img/previous-icon.png" alt="Previous" /> </a>
+            <?php endif ?>
+
+            <?php for($p = $debut; $p <= $fin; $p++): ?>
+                <a class="<?= $p == $active ? "lienStart active" : "lienStart" ?>" href="?controller=administration&action=administration&start=<?= $p ?>"> <?= $p ?> </a>
+            <?php endfor ?> 
+
+            <?php if ($active < $nb_total_pages) : ?>
+                <a href="?controller=administration&action=administration&start=<?= $active + 1 ?>"> <img class="icone" src="Content/img/next-icon.png" alt="Next" /> </a>
+            <?php endif ?>
         </div>
     <?php endif; ?>
 

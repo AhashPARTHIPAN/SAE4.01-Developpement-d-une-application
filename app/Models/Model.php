@@ -60,11 +60,19 @@ class Model
     }
     public function getJeuxWithLimit($offset = 0, $limit = 25)
     {
-        $requete = $this->bd->prepare('Select * from jeu WHERE date_parution_debut IS NOT NULL ORDER BY date_parution_debut DESC LIMIT :limit OFFSET :offset');
-        $requete->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $requete->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $requete->execute();
-        return $requete->fetchAll(PDO::FETCH_ASSOC);
+        $query = "SELECT jeu.id_jeu, jeu.identifiant, jeu.titre, jeu.date_parution_debut, jeu.date_parution_fin, jeu.information_date, jeu.version, jeu.nombre_de_joueurs, jeu.age_indique, jeu.mots_cles, jeu.mecanisme_id, GROUP_CONCAT(DISTINCT categorie.nom ORDER BY categorie.nom ASC SEPARATOR ', ') AS categories
+                FROM jeu
+                LEFT JOIN jeu_categorie ON jeu.id_jeu = jeu_categorie.id_jeu
+                LEFT JOIN categorie ON jeu_categorie.id_categorie = categorie.id_categorie
+                WHERE jeu.date_parution_debut IS NOT NULL
+                GROUP BY jeu.id_jeu, jeu.titre
+                ORDER BY jeu.date_parution_debut DESC
+                LIMIT :limit OFFSET :offset";
+        $req = $this->bd->prepare($query);
+        $req->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $req->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Fonction pour récupérer un jeu aléatoire
