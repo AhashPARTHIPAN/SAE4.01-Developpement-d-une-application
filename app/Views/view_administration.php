@@ -19,7 +19,6 @@
         <div class="admin-section">
             <h2>Gestion des jeux</h2>
             <a href="?controller=set&action=form_add"><button class="Bouton">Ajouter un jeu</button></a>
-            <a href="?controller=administration&action=paginationJeux" class="Bouton">Voir tous les jeux (paginé)</a>
             <!-- Barre de recherche -->
             <input type="text" id="recherche-jeu-admin" placeholder="Rechercher un jeu..." style="margin:10px 0; padding:5px; width:250px;">
             <table id="table-jeux-admin">
