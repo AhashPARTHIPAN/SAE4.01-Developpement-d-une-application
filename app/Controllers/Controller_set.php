@@ -72,13 +72,13 @@ class Controller_set extends Controller
             foreach ($infos as $k => $v) {
                 $dbKey = $this->mapDatabaseKey($k);
                 if (isset($ancien[$dbKey]) && $ancien[$dbKey] !== $v) {
-                    $changes[] = "$dbKey=" . $ancien[$dbKey] . "->" . $v;
+                    $changes[] = ['field' => $dbKey, 'old' => $ancien[$dbKey], 'new' => $v];
                 }
             }
-            $detail = 'id=' . $_POST['id_jeu'];
-            if (!empty($changes)) {
-                $detail .= '; ' . implode('; ', $changes);
-            }
+            $detail = json_encode([
+                'id' => $_POST['id_jeu'],
+                'changes' => $changes
+            ]);
             $m->logAction(
                 $_SESSION['utilisateur']['id'],
                 'modification_jeu',
@@ -111,10 +111,12 @@ class Controller_set extends Controller
             $jeuInfo = $m->getJeuParId($id);
             $suppression = $m->removeJeuParId($id);
             if ($suppression) {
-                $detail = 'id=' . $id;
-                if ($jeuInfo) {
-                    $detail .= '; titre=' . $jeuInfo['titre'];
-                }
+                $detail = json_encode([
+                    'id' => $id,
+                    'jeu' => $jeuInfo ? [
+                        'titre' => $jeuInfo['titre']
+                    ] : null
+                ]);
                 $m->logAction(
                     $_SESSION['utilisateur']['id'],
                     'suppression_jeu',
@@ -146,10 +148,9 @@ class Controller_set extends Controller
 
         // Récupération des listes nécessaires à l'affichage du formulaire
         $data = [
-            "categories" => $m->getIdOfCategories(),
-            "auteurs" => $m->getAuteurs(),
-            "editeurs" => $m->getEditeurs(),
-            "mecanismes" => $m->getMecanismes(),
+            "localisationSalle" => $m->getLocalisationSalle(),
+            "localisationEtagere" => $m->getLocalisationEtagere(),
+            
         ];
 
         // Affichage du formulaire d'ajout de jeu
@@ -163,7 +164,7 @@ class Controller_set extends Controller
         // Test si les informations nécessaires sont fournies
         if (isset($_POST["titre_jeu"]) && !preg_match("/^ *$/", $_POST["titre_jeu"])) {
             $m = Model::getModel();
-
+        
             // Vérification des autres champs, ceux qui ne sont pas required doivent être gérés comme null si vides
             $infos = [];
             $noms = [
@@ -175,14 +176,17 @@ class Controller_set extends Controller
                 'version',
                 'nombre_joueurs',
                 'age_min',
-                'mots_cles'
+                'mots_cles',
+                'salle',
+                'etagere'
             ];
 
             foreach ($noms as $v) {
                 // Vérifie si la valeur existe et si elle n'est pas vide
                 $infos[$v] = isset($_POST[$v]) && !preg_match("/^ *$/", $_POST[$v]) ? $_POST[$v] : null;
             }
-
+            $loc = $m->getIdLocalisation($infos['salle'], $infos['etagere']);
+            $infos['localisation_id'] = $loc;
             // Ajout du jeu dans la base
             $jeu_id = $m->addJeu($infos);
             if ($jeu_id === false) {
@@ -235,7 +239,10 @@ class Controller_set extends Controller
             }
 
             // Si tout est bon, succès
-            $detail = 'id=' . $jeu_id . '; titre=' . $_POST['titre_jeu'];
+            $detail = json_encode([
+                'id' => $jeu_id,
+                'titre' => $_POST['titre_jeu']
+            ]);
             $m->logAction(
                 $_SESSION['utilisateur']['id'],
                 'ajout_jeu',
@@ -303,18 +310,18 @@ class Controller_set extends Controller
             $m->updateUtilisateur($id, $nom, $email, $role);
             $changes = [];
             if ($ancien['nom'] != $nom) {
-                $changes[] = 'nom=' . $ancien['nom'] . '->' . $nom;
+                $changes[] = ['field' => 'nom', 'old' => $ancien['nom'], 'new' => $nom];
             }
             if ($ancien['email'] != $email) {
-                $changes[] = 'email=' . $ancien['email'] . '->' . $email;
+                $changes[] = ['field' => 'email', 'old' => $ancien['email'], 'new' => $email];
             }
             if ($ancien['role'] != $role) {
-                $changes[] = 'role=' . $ancien['role'] . '->' . $role;
+                $changes[] = ['field' => 'role', 'old' => $ancien['role'], 'new' => $role];
             }
-            $detail = 'id=' . $id;
-            if (!empty($changes)) {
-                $detail .= '; ' . implode('; ', $changes);
-            }
+            $detail = json_encode([
+                'id' => $id,
+                'changes' => $changes
+            ]);
             $m->logAction(
                 $_SESSION['utilisateur']['id'],
                 'modification_utilisateur',
@@ -344,10 +351,14 @@ class Controller_set extends Controller
             $util = $m->getUtilisateurParId($id);
             $suppression = $m->removeUserParId($id);
             if ($suppression) {
-                $detail = 'id=' . $id;
-                if ($util) {
-                    $detail .= '; nom=' . $util['nom'];
-                }
+                $detail = json_encode([
+                    'id' => $id,
+                    'utilisateur' => $util ? [
+                        'nom' => $util['nom'],
+                        'email' => $util['email'],
+                        'role' => $util['role']
+                    ] : null
+                ]);
                 $m->logAction(
                     $_SESSION['utilisateur']['id'],
                     'suppression_utilisateur',
@@ -366,6 +377,22 @@ class Controller_set extends Controller
             "message" => $message,
         ];
         $this->render("message", $data);
+    }
+
+    private function mapDatabaseKey($formKey)
+    {
+        $mapping = [
+            'id_jeu' => 'id_jeu',
+            'titre_jeu' => 'titre',
+            'date_parution_debut' => 'date_parution_debut',
+            'date_parution_fin' => 'date_parution_fin',
+            'information_date' => 'information_date',
+            'version' => 'version',
+            'nombre_joueurs' => 'nombre_joueurs',
+            'age_min' => 'age_min',
+            'mots_cles' => 'mots_cles'
+        ];
+        return $mapping[$formKey] ?? $formKey;
     }
 
 }

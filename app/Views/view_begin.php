@@ -1,11 +1,10 @@
-<?php require_once "view_begin.php" ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Collection de jeux</title>
-    <link href="Content/css/style.css" rel="stylesheet">
+    <link href="Content/css/style-v2.css" rel="stylesheet">
 </head>
 <body>
     <!-- Tête de page -->
@@ -16,8 +15,7 @@
         <nav class="nav-links">
             <a href="index.php" class="nav-link">Accueil</a>
             <a href="?controller=list&action=pagination" class="nav-link">Découvrir</a>
-	       <a href="?controller=recherche&action=rechercheAvancee" class="nav-link">Recherche avancée</a>
-            
+            <a href="?controller=recherche&action=rechercheAvancee" class="nav-link">Recherche avancée</a>
             <!-- Vérifie si l'utilisateur est connecté -->
             <?php if (isset($_SESSION['utilisateur'])): ?>
                 <a href="?controller=monCompte" class="nav-link">Mon Compte</a>

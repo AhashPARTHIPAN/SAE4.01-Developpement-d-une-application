@@ -1,9 +1,24 @@
+:root {
+    /* Couleurs principales */
+    --color-primary: rgba(41, 51, 88, 1);
+    --color-primary-dark: #2b3b6a;
+    --color-primary-darker: #333;
+    --color-bg: #f4f4f4;
+    --color-white: #fff;
+    --color-text-muted: #666;
+    --color-border: #ccc;
+    --color-shadow-light: rgba(0, 0, 0, 0.1);
+    --color-shadow-medium: rgba(0, 0, 0, 0.2);
+}
+
+
+
 /*------------------HEADER------------------*/
 
 /* Styles généraux */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    background-color: var(--color-primary);
     margin: 0;
     padding: 0;
 }

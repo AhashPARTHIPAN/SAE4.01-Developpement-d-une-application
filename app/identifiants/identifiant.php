@@ -1,6 +1,7 @@
 <?php
-
-$dsn = 'mysql:host=localhost;dbname=sae_bd';
+$dsn = 'mysql:host=localhost;dbname=nom_bdd';
+$host = 'localhost';
 $username = 'root';
-$password = '';
+$password = 'mdp';
+$database = 'nom_bdd';
 ?>

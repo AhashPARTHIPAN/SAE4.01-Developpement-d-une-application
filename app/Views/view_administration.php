@@ -1,9 +1,8 @@
-<?php
-require_once "view_begin.php" ?>
+<?php require_once "view_begin.php" ?>
 
 <div class="container">
     <h1>Panneau d'administration</h1>
-    <!-- Bouton d'accès gestion réservations -->
+    <!-- Bouton d'accès gestion réservations, utilisateurs, historique, export -->
     <?php if ($_SESSION['utilisateur']['role'] === 'Admin' || $_SESSION['utilisateur']['role'] === 'Gestionnaire'): ?>
         <div class="admin-button">
             <a href="index.php?controller=administration&action=administrationReservation" class="Bouton">Gestion des réservations</a>
@@ -11,6 +10,7 @@ require_once "view_begin.php" ?>
                 <a href="index.php?controller=administration&action=administrationUtilisateur" class="Bouton">Gestion des utilisateurs</a>
             <?php endif; ?>
             <a href="index.php?controller=historique" class="Bouton">Historique</a>
+            <a href="index.php?controller=exportation&action=exportation" class="Bouton">Exporter les données</a>
         </div>
     <?php endif; ?>
 
@@ -31,13 +31,13 @@ require_once "view_begin.php" ?>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($jeux as $jeu): ?>
+                    <?php foreach ($liste as $jeu): ?>
                         <tr>
                             <td><?= htmlspecialchars($jeu['id_jeu']) ?></td>
                             <td><?= htmlspecialchars($jeu['titre']) ?></td>
                             <td><?= htmlspecialchars($jeu['categories']) ?></td>
                             <td>
-                                <a href="?controller=set&action=form_update&id_jeu=<?php echo $jeu["id_jeu"]?>"><button class="Bouton">Modifier</button></a>
+                                <a href="?controller=set&action=form_update&id_jeu=<?= $jeu["id_jeu"] ?>"><button class="Bouton">Modifier</button></a>
                                 <!-- Bouton supprimer avec confirmation -->
                                 <button class="Bouton Noir" onclick="confirmSuppression(<?= $jeu['id_jeu'] ?>)">Supprimer</button>
                             </td>
@@ -45,17 +45,42 @@ require_once "view_begin.php" ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+
+            <!-- Pagination -->
+            <?php if (isset($nb_total_pages) && $nb_total_pages > 1): ?>
+                <div class="listePages">
+                    <p>Pages :</p>
+                    <?php if ($active > 1): ?>
+                        <a href="?controller=administration&action=administration&start=<?= $active - 1 ?>">
+                            <img class="icone" src="Content/img/previous-icon.png" alt="Previous" />
+                        </a>
+                    <?php endif; ?>
+
+                    <?php for($p = $debut; $p <= $fin; $p++): ?>
+                        <a class="<?= $p == $active ? "active" : "" ?>" 
+                           href="?controller=administration&action=administration&start=<?= $p ?>">
+                            <?= $p ?>
+                        </a>
+                    <?php endfor; ?>
+
+                    <?php if ($active < $nb_total_pages): ?>
+                        <a href="?controller=administration&action=administration&start=<?= $active + 1 ?>">
+                            <img class="icone" src="Content/img/next-icon.png" alt="Next" />
+                        </a>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
         </div>
     <?php endif; ?>
 
-    <!-- Script JavaScript pour confirmation -->
+    <!-- Script JavaScript pour confirmation et recherche -->
     <script>
         function confirmSuppression(idJeu) {
             if (confirm("Êtes-vous sûr de vouloir supprimer ce jeu ?")) {
                 window.location.href = "?controller=set&action=remove&id_jeu=" + idJeu;
             }
         }
-        // Filtre de recherche plus court pour la table des jeux
+        // Filtre de recherche pour la table des jeux
         document.addEventListener('DOMContentLoaded', function() {
             const input = document.getElementById('recherche-jeu-admin');
             const rows = document.querySelectorAll('#table-jeux-admin tbody tr');
@@ -67,4 +92,5 @@ require_once "view_begin.php" ?>
             });
         });
     </script>
+
 <?php require_once "view_end.php" ?>

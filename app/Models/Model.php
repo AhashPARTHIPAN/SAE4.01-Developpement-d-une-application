@@ -60,11 +60,19 @@ class Model
     }
     public function getJeuxWithLimit($offset = 0, $limit = 25)
     {
-        $requete = $this->bd->prepare('Select * from jeu WHERE date_parution_debut IS NOT NULL ORDER BY date_parution_debut DESC LIMIT :limit OFFSET :offset');
-        $requete->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $requete->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $requete->execute();
-        return $requete->fetchAll(PDO::FETCH_ASSOC);
+        $query = "SELECT jeu.id_jeu, jeu.identifiant, jeu.titre, jeu.date_parution_debut, jeu.date_parution_fin, jeu.information_date, jeu.version, jeu.nombre_de_joueurs, jeu.age_indique, jeu.mots_cles, jeu.mecanisme_id, GROUP_CONCAT(DISTINCT categorie.nom ORDER BY categorie.nom ASC SEPARATOR ', ') AS categories
+                FROM jeu
+                LEFT JOIN jeu_categorie ON jeu.id_jeu = jeu_categorie.id_jeu
+                LEFT JOIN categorie ON jeu_categorie.id_categorie = categorie.id_categorie
+                WHERE jeu.date_parution_debut IS NOT NULL
+                GROUP BY jeu.id_jeu, jeu.titre
+                ORDER BY jeu.date_parution_debut DESC
+                LIMIT :limit OFFSET :offset";
+        $req = $this->bd->prepare($query);
+        $req->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $req->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Fonction pour récupérer un jeu aléatoire
@@ -191,7 +199,36 @@ class Model
         return $tab;
     }
 
+    public function getLocalisationSalle()
+    {
+        $req = $this->bd->prepare("SELECT DISTINCT salle from localisation");
+        $req->execute();
+        $tab = $req->fetchAll(PDO::FETCH_ASSOC);
+        return $tab;
+    }
 
+    public function getLocalisationEtagere()
+    {
+        $req = $this->bd->prepare("SELECT DISTINCT etagere from localisation");
+        $req->execute();
+        $tab = $req->fetchAll(PDO::FETCH_ASSOC);
+        return $tab;
+    }
+
+    public function getIdLocalisation($salle, $etagere)
+    {
+        $req = $this->bd->prepare("SELECT DISTINCT localisation_id from localisation where salle=:salle and etagere=:etagere");
+        $req->bindParam(":salle", $salle);
+        $req->bindParam(":etagere", $etagere);
+        $req->execute();
+        $tab = $req->fetch(PDO::FETCH_ASSOC);
+        if ($tab) {
+            return $tab["localisation_id"];
+        } else {
+            return "";
+        }
+
+    }
 
 
     public function getDateDeSortie()
@@ -354,8 +391,12 @@ class Model
 
     public function getReservations()
     {
-        $query = "SELECT pret.id_pret, jeu.titre AS nom_jeu, utilisateur.nom AS utilisateur, 
-                     pret.date_emprunt, pret.date_retour 
+        $query = "SELECT pret.id_pret AS id_reservation, jeu.titre AS nom_jeu, utilisateur.nom AS utilisateur, 
+                     pret.date_emprunt, pret.date_retour,
+                     CASE 
+                         WHEN pret.date_retour IS NULL THEN 'En cours'
+                         ELSE 'Rendu'
+                     END AS statut
               FROM pret
               INNER JOIN boite ON pret.id_boite = boite.id_boite
               INNER JOIN jeu ON boite.jeu_id = jeu.id_jeu
@@ -573,6 +614,18 @@ class Model
 
             // Exécuter la requête
             if ($stmt->execute()) {
+                $jeu_id = $this->getDernierJeu();
+                if ($infos['localisation_id'] !== '') {
+                    $query2 = "INSERT INTO boite (jeu_id, localisation_id) 
+                      VALUES ($jeu_id, :localisation)";
+                    $stmt2 = $this->bd->prepare($query2);
+
+
+                    $stmt2->bindParam(':localisation', $infos['localisation_id']);
+                    $stmt2->execute();
+                } else {
+                    return false;
+                }
                 // Retourner l'ID du jeu inséré
                 return $this->bd->lastInsertId();
             } else {
@@ -693,9 +746,17 @@ class Model
             return false;
         }
     }
-    
+
+    public function getDernierJeu()
+    {
+        $req = $this->bd->prepare("SELECT id_jeu from jeu order by id_jeu desc LIMIT 1");
+        $req->execute();
+        $tab = $req->fetch(PDO::FETCH_ASSOC);
+        return $tab["id_jeu"];
+    }
     // Réserver une boîte de jeu pour un utilisateur
-    public function reserverBoite($id_utilisateur, $id_boite) {
+    public function reserverBoite($id_utilisateur, $id_boite)
+    {
         // Vérifie si la boîte est déjà empruntée (prêt en cours)
         $sql = "SELECT 1 FROM pret WHERE id_boite = :id_boite AND date_retour IS NULL";
         $req = $this->bd->prepare($sql);
@@ -719,7 +780,8 @@ class Model
     }
 
     // Récupère l'id_jeu à partir de l'id_boite
-    public function getJeuIdByBoite($id_boite) {
+    public function getJeuIdByBoite($id_boite)
+    {
         $sql = "SELECT jeu_id FROM boite WHERE id_boite = :id_boite";
         $req = $this->bd->prepare($sql);
         $req->bindValue(':id_boite', $id_boite, PDO::PARAM_INT);
@@ -729,7 +791,8 @@ class Model
     }
 
     // Debug : affiche les 5 derniers prêts
-    public function getLastPretsDebug() {
+    public function getLastPretsDebug()
+    {
         $sql = "SELECT * FROM pret ORDER BY id_pret DESC LIMIT 5";
         $req = $this->bd->prepare($sql);
         $req->execute();
@@ -737,7 +800,8 @@ class Model
     }
 
     // Marquer un prêt comme rendu (ajoute la date de retour)
-    public function rendrePret($id_pret) {
+    public function rendrePret($id_pret)
+    {
         $sql = "UPDATE pret SET date_retour = CURDATE() WHERE id_pret = :id_pret AND date_retour IS NULL";
         $req = $this->bd->prepare($sql);
         $req->bindValue(':id_pret', $id_pret, PDO::PARAM_INT);
@@ -745,7 +809,8 @@ class Model
     }
 
     // Met à jour la salle de la boîte
-    public function updateBoiteSalle($id_boite, $salle) {
+    public function updateBoiteSalle($id_boite, $salle)
+    {
         $sql = "UPDATE boite SET salle = :salle WHERE id_boite = :id_boite";
         $req = $this->bd->prepare($sql);
         $req->bindValue(':salle', $salle, PDO::PARAM_STR);
@@ -768,17 +833,33 @@ class Model
         ]);
     }
 
-    public function getHistorique($limit = 100)
+    public function getHistorique($page = 1, $limit = 50)
     {
+        $offset = ($page - 1) * $limit;
+
+        // Récupérer le nombre total d'entrées
+        $sqlCount = "SELECT COUNT(*) FROM historique";
+        $stmtCount = $this->bd->prepare($sqlCount);
+        $stmtCount->execute();
+        $total = $stmtCount->fetchColumn();
+
+        // Récupérer les entrées avec pagination
         $sql = "SELECT h.id, u.nom, h.action, h.details, h.date_action
                 FROM historique h
                 JOIN utilisateur u ON h.utilisateur_id = u.utilisateur_id
                 ORDER BY h.date_action DESC
-                LIMIT :lim";
+                LIMIT :lim OFFSET :offset";
         $stmt = $this->bd->prepare($sql);
         $stmt->bindValue(':lim', (int) $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            'logs' => $stmt->fetchAll(PDO::FETCH_ASSOC),
+            'total' => $total,
+            'pages' => ceil($total / $limit),
+            'current_page' => $page
+        ];
     }
 
 }
