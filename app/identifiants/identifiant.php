@@ -1,5 +1,4 @@
 <?php
-
 $dsn = 'mysql:host=localhost;dbname=nom_bdd';
 $host = 'localhost';
 $username = 'root';

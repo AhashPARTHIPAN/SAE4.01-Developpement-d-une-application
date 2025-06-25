@@ -78,7 +78,8 @@ Décompressez ou placez le projet dans un répertoire local.
 2. **Exécuter le script de création des tables** :
    - Ouvrez votre interface de gestion MySQL (ex. phpMyAdmin ou ligne de commande).
    - Importez le fichier `sql/creation_tables.sql` dans votre base de données.
-   - **Remarque importante** : Modifiez la localisation du fichier `inventaire.csv` dans le script pour refléter l'emplacement exact de votre fichier. Exemple :
+   - **Remarque importante** : Modifiez la localisation du fichier `inventaire.csv` dans le script pour refléter l'emplacement exact de votre fichier. 
+   Exemple :
      ```sql
      LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/inventaire.csv'
      INTO TABLE ...

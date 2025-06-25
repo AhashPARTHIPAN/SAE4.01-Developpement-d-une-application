@@ -1,7 +1,7 @@
 <?php
 require_once "view_begin.php" ?>
 
-
+<main>
 <h1> 
     <?php echo $title ?> 
 </h1>
@@ -9,6 +9,6 @@ require_once "view_begin.php" ?>
 <p>   
     <?php echo $message ?>
 </p>
-
+</main>
 
 <?php require "view_end.php"; ?>

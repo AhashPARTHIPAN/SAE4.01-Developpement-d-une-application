@@ -1,0 +1,1899 @@
+/* ========= VARIABLES CSS CLASSIQUES AMÉLIORÉES ========= */
+:root {
+  /* Palette de couleurs classique améliorée */
+  --color-primary: #2c3e50;
+  --color-primary-light: #34495e;
+  --color-primary-dark: #1a252f;
+  --color-secondary: #3498db;
+  --color-secondary-light: #5dade2;
+  --color-secondary-dark: #2980b9;
+  --color-accent: #e74c3c;
+  --color-accent-light: #ec7063;
+  --color-success: #27ae60;
+  --color-success-light: #2ecc71;
+  --color-warning: #f39c12;
+  --color-warning-light: #f1c40f;
+  --color-info: #3498db;
+  
+  /* Couleurs neutres classiques améliorées */
+  --color-white: #ffffff;
+  --color-light: #f8f9fa;
+  --color-light-gray: #ecf0f1;
+  --color-gray: #bdc3c7;
+  --color-dark-gray: #7f8c8d;
+  --color-text: #2c3e50;
+  --color-text-light: #5d6d7e;
+  --color-text-muted: #95a5a6;
+  --color-border: #d5dbdb;
+  --color-border-light: #ecf0f1;
+  
+  /* Ombres classiques améliorées */
+  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-heavy: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.18);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  
+  /* Bordures classiques améliorées */
+  --border-radius: 8px;
+  --border-radius-large: 12px;
+  --border-radius-small: 4px;
+  --border-radius-full: 50px;
+  
+  /* Typographie classique améliorée */
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family-heading: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  --font-size-4xl: 2.5rem;
+  
+  /* Espacements classiques améliorés */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  
+  /* Transitions classiques améliorées */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Gradients subtils */
+  --gradient-primary: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  --gradient-secondary: linear-gradient(135deg, #3498db 0%, #5dade2 100%);
+  --gradient-accent: linear-gradient(135deg, #e74c3c 0%, #ec7063 100%);
+  --gradient-success: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+}
+
+/* ========= RESET ET BASE CLASSIQUE AMÉLIORÉ ========= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  background: linear-gradient(135deg, #e6ecf3 0%, #dbe6f6 100%);
+  background-attachment: fixed;
+  color: var(--color-text);
+  line-height: 1.7;
+  font-size: var(--font-size-base);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+/* ========= HEADER CLASSIQUE AMÉLIORÉ ========= */
+.nav-header {
+  background: var(--gradient-primary);
+  padding: var(--spacing-md) var(--spacing-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-medium);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 4px solid var(--color-secondary);
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  transition: var(--transition-normal);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.nav-link {
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: 600;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+  transition: var(--transition-normal);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: var(--transition-normal);
+  }
+
+.nav-link:hover::before {
+  left: 100%;
+  }
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ========= SECTIONS PRINCIPALES CLASSIQUES AMÉLIORÉES ========= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+#presentation {
+  max-width: 1000px;
+  margin: var(--spacing-2xl) auto;
+  padding: 8rem;
+  background: var(--color-white);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-medium);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border-light);
+}
+
+#presentation::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-secondary);
+}
+
+/* Espacement entre les sections de la page d'accueil */
+#presentation > div {
+  margin-bottom: var(--spacing-2xl);
+  padding: var(--spacing-lg) 0;
+}
+
+#presentation > div:last-child {
+  margin-bottom: 0;
+}
+
+/* Séparateur visuel entre les sections */
+#presentation > div:not(:last-child)::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+  margin: var(--spacing-xl) auto 0;
+  border-radius: 1px;
+}
+
+.section-title {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-primary);
+  position: relative;
+  letter-spacing: -0.5px;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--gradient-secondary);
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+.highlight {
+  background: var(--gradient-secondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  padding: 0 4px;
+}
+
+/* ========= FORMULAIRES CLASSIQUES AMÉLIORÉS ========= */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-width: 500px;
+  margin: 0 auto;
+  padding: var(--spacing-md) 0;
+}
+
+.form-group {
+  position: relative;
+}
+
+input[type="search"],
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-base);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background-color: var(--color-white);
+  transition: var(--transition-normal);
+  font-family: var(--font-family);
+  color: var(--color-text);
+  box-shadow: var(--shadow-inset);
+  margin-bottom: var(--spacing-sm);
+}
+
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1), var(--shadow-inset);
+  transform: translateY(-1px);
+}
+
+input[type="search"]::placeholder,
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+textarea::placeholder {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+label {
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xs);
+  display: block;
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-primary);
+}
+
+/* ========= BOUTONS CLASSIQUES AMÉLIORÉS ========= */
+button,
+.Bouton,
+.btn-discover {
+  background: var(--gradient-secondary);
+  color: var(--color-white);
+  border: none;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  text-align: center;
+  box-shadow: var(--shadow-light);
+  position: relative;
+  overflow: hidden;
+  min-height: 48px;
+  margin: var(--spacing-sm) 0;
+}
+
+button::before,
+.Bouton::before,
+.btn-discover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: var(--transition-normal);
+}
+
+button:hover::before,
+.Bouton:hover::before,
+.btn-discover:hover::before {
+  left: 100%;
+}
+
+button:hover,
+.Bouton:hover,
+.btn-discover:hover {
+  background: var(--gradient-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+button:active,
+.Bouton:active,
+.btn-discover:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-light);
+}
+
+/* Boutons avec icônes */
+.btn-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* ========= TABLEAUX CLASSIQUES AMÉLIORÉS ========= */
+.table-populaires,
+.table_rendu {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--color-white);
+  border-radius: var(--border-radius-large);
+  overflow: hidden;
+  box-shadow: var(--shadow-medium);
+  margin: var(--spacing-lg) 0;
+  border: 1px solid var(--color-border-light);
+}
+
+.table-populaires thead,
+.table_rendu thead {
+  background: var(--gradient-primary);
+  color: var(--color-white);
+}
+
+.table-populaires th,
+.table-populaires td,
+.table_rendu th,
+.table_rendu td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.table-populaires th,
+.table_rendu th {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: var(--font-size-sm);
+}
+
+.table-populaires tbody tr,
+.table_rendu tbody tr {
+  transition: var(--transition-fast);
+}
+
+.table-populaires tbody tr:hover,
+.table_rendu tbody tr:hover {
+  background-color: var(--color-light);
+  transform: scale(1.01);
+}
+
+.table-populaires tbody tr td a,
+.table_rendu tbody tr td a {
+  color: var(--color-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition-fast);
+  position: relative;
+  padding: 2px 4px;
+  border-radius: var(--border-radius-small);
+}
+
+.table-populaires tbody tr td a::after,
+.table_rendu tbody tr td a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gradient-secondary);
+  transition: var(--transition-fast);
+}
+
+.table-populaires tbody tr td a:hover::after,
+.table_rendu tbody tr td a:hover::after {
+  width: 100%;
+}
+
+.table-populaires tbody tr td a:hover,
+.table_rendu tbody tr td a:hover {
+  color: var(--color-primary);
+  background: rgba(52, 152, 219, 0.1);
+}
+
+/* ========= CARTES CLASSIQUES AMÉLIORÉES ========= */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+  margin: var(--spacing-xl) 0;
+}
+
+.card {
+  background: var(--color-white);
+  border-radius: var(--border-radius-large);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-light);
+  transition: var(--transition-normal);
+  border: 1px solid var(--color-border-light);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-secondary);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--color-secondary);
+}
+
+.card h3 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-primary);
+  letter-spacing: -0.3px;
+}
+
+.card p {
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.6;
+}
+
+.card a {
+  color: var(--color-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition-fast);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+  background: rgba(52, 152, 219, 0.1);
+  display: inline-block;
+}
+
+.card a:hover {
+  color: var(--color-white);
+  background: var(--gradient-secondary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-light);
+}
+
+/* ========= SECTION CONNEXION/INSCRIPTION CLASSIQUE AMÉLIORÉE ========= */
+#connexion_inscription {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-2xl);
+  max-width: 1000px;
+  margin: var(--spacing-2xl) auto;
+  padding: var(--spacing-xl);
+}
+
+.connexion,
+.inscription {
+  background: var(--color-white);
+  padding: var(--spacing-2xl);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-medium);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border-light);
+}
+
+.connexion::before,
+.inscription::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-secondary);
+}
+
+.connexion h2,
+.inscription h2 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-2xl);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+  position: relative;
+  letter-spacing: -0.3px;
+}
+
+.connexion h2::after,
+.inscription h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--gradient-secondary);
+  border-radius: 2px;
+}
+
+/* ========= MESSAGES CLASSIQUES AMÉLIORÉS ========= */
+.error,
+.error-message {
+  background: linear-gradient(135deg, #fee 0%, #fcc 100%);
+  color: var(--color-accent);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--color-accent);
+  margin-bottom: var(--spacing-md);
+  font-weight: 500;
+  box-shadow: var(--shadow-light);
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+.success,
+.success-message {
+  background: linear-gradient(135deg, #efe 0%, #cfc 100%);
+  color: var(--color-success);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--color-success);
+  margin-bottom: var(--spacing-md);
+  font-weight: 500;
+  box-shadow: var(--shadow-light);
+  border: 1px solid rgba(39, 174, 96, 0.2);
+}
+
+/* ========= SECTION JEU PRESENTATION CLASSIQUE AMÉLIORÉE ========= */
+.container.jeu-presentation {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--spacing-2xl);
+  max-width: 1200px;
+  margin: var(--spacing-2xl) auto;
+  padding: var(--spacing-xl);
+}
+
+.section-gauche {
+  background: var(--color-white);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-medium);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border-light);
+  }
+
+.section-gauche::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-secondary);
+}
+
+.game-image {
+    width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-medium);
+  transition: var(--transition-normal);
+  border: 3px solid var(--color-border-light);
+  }
+
+.game-image:hover {
+  transform: scale(1.03);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--color-secondary);
+}
+
+.section-droite {
+  background: var(--color-white);
+  padding: var(--spacing-2xl);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-medium);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border-light);
+}
+
+.section-droite::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-secondary);
+  }
+
+.section-droite h1 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-3xl);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+.infos-jeu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+.info-item {
+  background: var(--color-light);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--color-secondary);
+  transition: var(--transition-fast);
+  }
+
+.info-item:hover {
+  background: rgba(52, 152, 219, 0.1);
+  transform: translateX(4px);
+}
+
+.label {
+    font-weight: 700;
+  color: var(--color-primary);
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ========= SECTION JEUX SIMILAIRES CLASSIQUE AMÉLIORÉE ========= */
+.jeux-similaires {
+  max-width: 1200px;
+  margin: var(--spacing-2xl) auto;
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.jeux-similaires h2 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-2xl);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-2xl);
+  position: relative;
+  letter-spacing: -0.3px;
+}
+
+.jeux-similaires h2::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: var(--gradient-secondary);
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+/* ========= PAGINATION CLASSIQUE AMÉLIORÉE ========= */
+.listePages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-2xl) 0;
+  flex-wrap: wrap;
+}
+
+.listePages a {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-white);
+  color: var(--color-secondary);
+  text-decoration: none;
+  border-radius: var(--border-radius);
+  border: 2px solid var(--color-border);
+  transition: var(--transition-fast);
+  font-weight: 600;
+  min-width: 40px;
+  text-align: center;
+  box-shadow: var(--shadow-light);
+}
+
+.listePages a:hover {
+  background: var(--gradient-secondary);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--color-secondary);
+}
+
+.listePages a.active {
+  background: var(--gradient-accent);
+  color: var(--color-white);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-medium);
+}
+
+/* ========= FOOTER CLASSIQUE AMÉLIORÉ ========= */
+footer {
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  text-align: center;
+  padding: var(--spacing-2xl);
+  margin-top: var(--spacing-2xl);
+  border-top: 4px solid var(--color-secondary);
+  position: relative;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+footer a {
+  color: var(--color-secondary-light);
+  text-decoration: none;
+  transition: var(--transition-fast);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-small);
+}
+
+footer a:hover {
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+
+/* ========= ICÔNES CLASSIQUES AMÉLIORÉES ========= */
+.icone {
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  margin-right: var(--spacing-xs);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* ========= RESPONSIVE DESIGN CLASSIQUE AMÉLIORÉ ========= */
+@media (max-width: 768px) {
+  .nav-header {
+  flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+}
+
+  .nav-links {
+    flex-direction: column;
+  width: 100%;
+  }
+  
+  .nav-link {
+    width: 100%;
+    text-align: center;
+  }
+  
+  #connexion_inscription {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  .container.jeu-presentation {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .infos-jeu-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  #presentation {
+    margin: var(--spacing-lg);
+    padding: var(--spacing-lg);
+  }
+  
+  .section-title {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: var(--spacing-md);
+  }
+  
+  #presentation {
+    padding: var(--spacing-md);
+  }
+  
+  .connexion,
+  .inscription {
+    padding: var(--spacing-md);
+}
+
+  .section-droite {
+    padding: var(--spacing-md);
+  }
+  
+  .section-droite h1 {
+    font-size: var(--font-size-xl);
+  }
+  
+  .table-populaires,
+  .table_rendu {
+    font-size: var(--font-size-sm);
+}
+
+  .table-populaires th,
+  .table-populaires td,
+  .table_rendu th,
+  .table_rendu td {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* ========= ANIMATIONS CLASSIQUES AMÉLIORÉES ========= */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.card {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.connexion {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.inscription {
+  animation: slideInRight 0.8s ease-out;
+}
+
+.section-gauche {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.section-droite {
+  animation: slideInRight 0.8s ease-out;
+}
+
+/* ========= UTILITAIRES CLASSIQUES AMÉLIORÉS ========= */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+.mb-5 { margin-bottom: var(--spacing-xl); }
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+.mt-5 { margin-top: var(--spacing-xl); }
+
+.p-0 { padding: 0; }
+.p-1 { padding: var(--spacing-xs); }
+.p-2 { padding: var(--spacing-sm); }
+.p-3 { padding: var(--spacing-md); }
+.p-4 { padding: var(--spacing-lg); }
+.p-5 { padding: var(--spacing-xl); }
+
+/* ========= EFFETS SPÉCIAUX AMÉLIORÉS ========= */
+.gradient-text {
+  background: var(--gradient-secondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--gradient-secondary);
+  color: var(--color-white);
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+  margin: var(--spacing-lg) 0;
+}
+
+/* ========= STYLES SPÉCIFIQUES POUR LA VUE MON COMPTE ========= */
+#monCompte {
+  margin: var(--spacing-2xl) auto;
+  padding: var(--spacing-2xl);
+  background: var(--color-white);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--color-border-light);
+  position: relative;
+  overflow: hidden;
+}
+
+#monCompte::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-secondary);
+}
+
+#monCompte h1 {
+  color: var(--color-primary);
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+}
+
+#monCompte h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--gradient-secondary);
+  border-radius: var(--border-radius-full);
+}
+
+#monCompte h2 {
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin: var(--spacing-xl) 0 var(--spacing-lg) 0;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--color-border-light);
+  position: relative;
+}
+
+#monCompte h2::before {
+  content: '📋';
+  margin-right: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+}
+
+#monCompte h3 {
+  color: var(--color-primary);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin: var(--spacing-xl) 0 var(--spacing-lg) 0;
+  padding: var(--spacing-md);
+  background: var(--color-light);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--color-secondary);
+}
+
+/* Bouton d'administration dans monCompte */
+#monCompte .admin-button {
+  text-align: center;
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-lg);
+  background: linear-gradient(135deg, var(--color-light) 0%, var(--color-light-gray) 100%);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+}
+
+#monCompte .admin-button .Bouton {
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  display: inline-block;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-light);
+}
+
+#monCompte .admin-button .Bouton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+  background: var(--gradient-primary);
+  filter: brightness(1.1);
+}
+
+/* Formulaires dans monCompte */
+#monCompte form {
+  background: var(--color-light);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-xl);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-light);
+}
+
+#monCompte form:hover {
+  box-shadow: var(--shadow-medium);
+  transition: var(--transition-normal);
+}
+
+#monCompte label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#monCompte input[type="text"],
+#monCompte input[type="email"],
+#monCompte input[type="password"],
+#monCompte input[type="date"],
+#monCompte textarea {
+  width: 100%;
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  transition: var(--transition-normal);
+  background: var(--color-white);
+  box-shadow: var(--shadow-inset);
+}
+
+#monCompte input[type="text"]:focus,
+#monCompte input[type="email"]:focus,
+#monCompte input[type="password"]:focus,
+#monCompte input[type="date"]:focus,
+#monCompte textarea:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  transform: translateY(-1px);
+}
+
+#monCompte textarea {
+  min-height: 100px;
+  resize: vertical;
+  font-family: var(--font-family);
+}
+
+#monCompte .Bouton {
+  background: var(--gradient-secondary);
+  color: var(--color-white);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#monCompte .Bouton:hover {
+  background: var(--gradient-secondary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+  filter: brightness(1.1);
+}
+
+#monCompte .Bouton:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-light);
+}
+
+/* Messages dans monCompte */
+#monCompte .error-message {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+  color: var(--color-white);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin: var(--spacing-md) 0;
+  font-weight: 600;
+  box-shadow: var(--shadow-light);
+  border-left: 4px solid var(--color-accent-dark);
+}
+
+#monCompte .success-message {
+  background: linear-gradient(135deg, var(--color-success) 0%, var(--color-success-light) 100%);
+  color: var(--color-white);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  margin: var(--spacing-md) 0;
+  font-weight: 600;
+  box-shadow: var(--shadow-light);
+  border-left: 4px solid var(--color-success-dark);
+}
+
+/* ========= STYLES SPÉCIFIQUES POUR LA VUE ADMINISTRATION ========= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.container h1 {
+  color: var(--color-primary);
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+}
+
+.container h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: var(--gradient-accent);
+  border-radius: var(--border-radius-full);
+}
+
+/* Boutons d'administration */
+.admin-button {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  margin: var(--spacing-xl) 0;
+  flex-wrap: wrap;
+}
+
+.admin-button .Bouton {
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  display: inline-block;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-button .Bouton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: var(--transition-normal);
+}
+
+.admin-button .Bouton:hover::before {
+  left: 100%;
+}
+
+.admin-button .Bouton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+  background: var(--gradient-primary);
+  filter: brightness(1.1);
+}
+
+/* Section d'administration */
+.admin-section {
+  background: var(--color-white);
+  padding: 8rem;
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-medium);
+  margin: var(--spacing-xl) 0;
+  border: 1px solid var(--color-border-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-accent);
+}
+
+.admin-section h2 {
+  color: var(--color-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--color-border-light);
+  position: relative;
+}
+
+.admin-section h2::before {
+  content: '⚙️';
+  margin-right: var(--spacing-sm);
+  font-size: var(--font-size-lg);
+}
+
+/* Tableau d'administration */
+.admin-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--spacing-lg) 0;
+  background: var(--color-white);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-light);
+}
+
+.admin-section thead {
+  background: var(--gradient-primary);
+  color: var(--color-white);
+}
+
+.admin-section th {
+  padding: var(--spacing-md);
+  text-align: left;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--color-primary-dark);
+}
+
+.admin-section tbody tr {
+  border-bottom: 1px solid var(--color-border-light);
+  transition: var(--transition-normal);
+}
+
+.admin-section tbody tr:hover {
+  background: var(--color-light);
+  transform: scale(1.01);
+  box-shadow: var(--shadow-light);
+}
+
+.admin-section td {
+  padding: var(--spacing-md);
+  vertical-align: middle;
+  color: var(--color-text);
+}
+
+.admin-section td:first-child {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* Boutons dans le tableau */
+.admin-section .Bouton {
+  background: var(--gradient-secondary);
+  color: var(--color-white);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-small);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  margin-right: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-section .Bouton:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-light);
+  filter: brightness(1.1);
+}
+
+.admin-section .Bouton.Noir {
+  background: var(--gradient-accent);
+}
+
+.admin-section .Bouton.Noir:hover {
+  background: var(--gradient-accent);
+  filter: brightness(1.1);
+}
+
+/* Responsive pour les vues monCompte et administration */
+@media (max-width: 768px) {
+  #monCompte {
+    margin: var(--spacing-lg) var(--spacing-md);
+    padding: var(--spacing-lg);
+  }
+  
+  #monCompte h1 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  #monCompte h2 {
+    font-size: var(--font-size-lg);
+  }
+  
+  #monCompte form {
+    padding: var(--spacing-lg);
+  }
+  
+  .admin-button {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .admin-button .Bouton {
+    width: 100%;
+    max-width: 300px;
+  text-align: center;
+  }
+  
+  .admin-section {
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
+}
+
+  .admin-section table {
+    font-size: var(--font-size-sm);
+  }
+  
+  .admin-section th,
+  .admin-section td {
+    padding: var(--spacing-sm);
+}
+
+  .admin-section .Bouton {
+    display: block;
+    width: 100%;
+    margin-bottom: var(--spacing-sm);
+    text-align: center;
+}
+}
+
+@media (max-width: 480px) {
+  #monCompte {
+    margin: var(--spacing-md);
+    padding: var(--spacing-md);
+  }
+  
+  .container {
+    padding: var(--spacing-md);
+  }
+  
+  .admin-section {
+    padding: var(--spacing-md);
+  }
+  
+  .admin-section table {
+    font-size: var(--font-size-xs);
+  }
+  
+  .admin-section th,
+  .admin-section td {
+    padding: var(--spacing-xs);
+  }
+}
+
+/* ========= STYLES SPÉCIFIQUES POUR LA VUE BOITE JEU ========= */
+/* Layout principal de la page boiteJeu */
+.container:not(.jeu-presentation) {
+  margin: var(--spacing-2xl) auto;
+  padding: var(--spacing-xl);
+}
+
+/* Section des détails du jeu */
+.details-jeu {
+  background: var(--color-white);
+  padding: var(--spacing-2xl);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-medium);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border-light);
+  width: 800px;
+  left : 170px;
+}
+
+.details-jeu::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-secondary);
+}
+
+.details-jeu h1.titre {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-3xl);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+  letter-spacing: -0.5px;
+  position: relative;
+}
+
+.details-jeu h1.titre::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: var(--gradient-secondary);
+  border-radius: var(--border-radius-full);
+}
+
+/* Section des boîtes disponibles */
+.boite-dispo {
+  margin-top: var(--spacing-xl);
+}
+
+.boite-dispo h3 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: var(--spacing-sm);
+}
+
+.boite-dispo h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: var(--gradient-secondary);
+  border-radius: 1px;
+}
+
+/* Cartes des boîtes individuelles */
+.boite {
+  background: var(--color-light);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-md);
+  border: 1px solid var(--color-border-light);
+  box-shadow: var(--shadow-light);
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.boite::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--gradient-secondary);
+}
+
+.boite:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+  background: rgba(52, 152, 219, 0.05);
+  border-color: var(--color-secondary);
+}
+
+.boite p {
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 500;
+}
+
+.boite p:first-child {
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.boite p:last-of-type {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Bouton de réservation */
+.reserve-button {
+  background: var(--gradient-success);
+  color: var(--color-white);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-light);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin-top: var(--spacing-sm);
+}
+
+.reserve-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: var(--transition-normal);
+}
+
+.reserve-button:hover::before {
+  left: 100%;
+}
+
+.reserve-button:hover {
+  background: var(--gradient-success);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+  filter: brightness(1.1);
+}
+
+.reserve-button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-light);
+}
+
+/* Section des jeux similaires */
+.jeux-similaires {
+  max-width: 1200px;
+  margin: var(--spacing-2xl) auto;
+  padding: var(--spacing-xl);
+  text-align: center;
+  background: var(--color-white);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--color-border-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.jeux-similaires::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-secondary);
+}
+
+.jeux-similaires h2 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-2xl);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-2xl);
+  position: relative;
+  letter-spacing: -0.3px;
+}
+
+.jeux-similaires h2::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: var(--gradient-secondary);
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3);
+}
+
+/* Grille des cartes de jeux similaires */
+.jeux-similaires .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+.jeux-similaires .card {
+  background: var(--color-light);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-light);
+  transition: var(--transition-normal);
+  border: 1px solid var(--color-border-light);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
+
+.jeux-similaires .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-secondary);
+}
+
+.jeux-similaires .card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--color-secondary);
+  background: var(--color-white);
+}
+
+.jeux-similaires .card h3 {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-primary);
+  letter-spacing: -0.3px;
+}
+
+.jeux-similaires .card p {
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.6;
+  font-size: var(--font-size-sm);
+}
+
+.jeux-similaires .card p:last-child {
+  color: var(--color-secondary);
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  margin-bottom: 0;
+}
+
+/* Responsive pour la page boiteJeu */
+@media (max-width: 768px) {
+  .container:not(.jeu-presentation) {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    margin: var(--spacing-lg) var(--spacing-md);
+    padding: var(--spacing-md);
+  }
+  
+  .game-image {
+    max-width: 100%;
+    min-height: 250px;
+  }
+  
+  .details-jeu {
+    padding: var(--spacing-lg);
+  }
+  
+  .details-jeu h1.titre {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .boite-dispo h3 {
+    font-size: var(--font-size-lg);
+  }
+  
+  .jeux-similaires {
+    margin: var(--spacing-lg) var(--spacing-md);
+    padding: var(--spacing-lg);
+  }
+  
+  .jeux-similaires h2 {
+    font-size: var(--font-size-xl);
+  }
+  
+  .jeux-similaires .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .container:not(.jeu-presentation) {
+    margin: var(--spacing-md);
+    padding: var(--spacing-sm);
+  }
+  
+  .game-image {
+    min-height: 200px;
+  }
+  
+  .game-image::before {
+    font-size: 3rem;
+  }
+  
+  .details-jeu {
+    padding: var(--spacing-md);
+  }
+  
+  .details-jeu h1.titre {
+    font-size: var(--font-size-xl);
+  }
+  
+  .boite {
+    padding: var(--spacing-md);
+  }
+  
+  .reserve-button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-sm);
+  }
+  
+  .jeux-similaires {
+    margin: var(--spacing-md);
+    padding: var(--spacing-md);
+  }
+  
+  .jeux-similaires .card {
+    padding: var(--spacing-lg);
+  }
+  
+  .jeux-similaires .card h3 {
+    font-size: var(--font-size-lg);
+  }
+}
