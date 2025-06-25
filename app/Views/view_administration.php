@@ -1,4 +1,3 @@
-<<<<<<< feature/redesign
 <?php require_once "view_begin.php" ?>
 
 <div class="container">
