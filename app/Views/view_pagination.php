@@ -1,7 +1,7 @@
 <?php
 require_once "view_begin.php" ?>
 
-<h1 id="presentation">Liste des jeux - Page <?= $active ?></h1>
+<h1 id="presentation" style="padding: 4rem !important;">Liste des jeux - Page <?= $active ?></h1>
 
 <?php require "view_liste_jeuPopulaire.php" ?>
 
