@@ -8,7 +8,6 @@ L'Université Sorbonne Paris Nord possède une collection exceptionnelle de plus
 
 ---
 
-<<<<<<< develop
 ## Contexte
 L'Université Sorbonne Paris Nord possède une collection exceptionnelle de plus de 17 000 jeux de société, certains datant du XIXe siècle. Ce projet vise à concevoir une application web accompagnée de scripts pour gérer, organiser, et valoriser cette collection.
 
@@ -78,7 +77,6 @@ SAE3.01-main/
 - **Export Excel** : Génération de rapports au format Excel
 - **Scripts Python** : Automatisation des tâches de nettoyage
 - **Données structurées** : Export des données de la collection
->>>>>>> main
 
 ---
 
@@ -241,7 +239,6 @@ python main.py
 
 ---
 
-<<<<<<< develop
 #### 2. Préparer la base de données
 1. **Importer l'inventaire fictif** :
    - Déplacez le fichier `inventaire.csv` dans le répertoire suivant (selon la version MySQL installée) :
