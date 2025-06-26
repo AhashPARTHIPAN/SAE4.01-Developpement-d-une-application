@@ -5,11 +5,15 @@
     <!-- Bouton d'accès gestion réservations, utilisateurs, historique, export -->
     <?php if ($_SESSION['utilisateur']['role'] === 'Admin' || $_SESSION['utilisateur']['role'] === 'Gestionnaire'): ?>
         <div class="admin-button">
-            <a href="index.php?controller=administration&action=administrationReservation" class="Bouton">Gestion des réservations</a>
+            <a href="index.php?controller=administration&action=administrationReservation" class="Bouton">Gestion des
+                réservations</a>
             <?php if ($_SESSION['utilisateur']['role'] === 'Admin'): ?>
-                <a href="index.php?controller=administration&action=administrationUtilisateur" class="Bouton">Gestion des utilisateurs</a>
+                <a href="index.php?controller=administration&action=administrationUtilisateur" class="Bouton">Gestion des
+                    utilisateurs</a>
             <?php endif; ?>
-            <a href="index.php?controller=historique" class="Bouton">Historique</a>
+            <?php if ($_SESSION['utilisateur']['role'] === 'Admin'): ?>
+                <a href="index.php?controller=historique" class="Bouton">Historique</a>
+            <?php endif; ?>
             <a href="index.php?controller=exportation&action=exportation" class="Bouton">Exporter les données</a>
         </div>
     <?php endif; ?>
@@ -20,7 +24,8 @@
             <h2>Gestion des jeux</h2>
             <a href="?controller=set&action=form_add"><button class="Bouton">Ajouter un jeu</button></a>
             <!-- Barre de recherche -->
-            <input type="text" id="recherche-jeu-admin" placeholder="Rechercher un jeu..." style="margin:10px 0; padding:5px; width:250px;">
+            <input type="text" id="recherche-jeu-admin" placeholder="Rechercher un jeu..."
+                style="margin:10px 0; padding:5px; width:250px;">
             <table id="table-jeux-admin">
                 <thead>
                     <tr>
@@ -37,9 +42,11 @@
                             <td><?= htmlspecialchars($jeu['titre']) ?></td>
                             <td><?= htmlspecialchars($jeu['categories']) ?></td>
                             <td>
-                                <a href="?controller=set&action=form_update&id_jeu=<?= $jeu["id_jeu"] ?>"><button class="Bouton">Modifier</button></a>
+                                <a href="?controller=set&action=form_update&id_jeu=<?= $jeu["id_jeu"] ?>"><button
+                                        class="Bouton">Modifier</button></a>
                                 <!-- Bouton supprimer avec confirmation -->
-                                <button class="Bouton Noir" onclick="confirmSuppression(<?= $jeu['id_jeu'] ?>)">Supprimer</button>
+                                <button class="Bouton Noir"
+                                    onclick="confirmSuppression(<?= $jeu['id_jeu'] ?>)">Supprimer</button>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -56,9 +63,9 @@
                         </a>
                     <?php endif; ?>
 
-                    <?php for($p = $debut; $p <= $fin; $p++): ?>
-                        <a class="<?= $p == $active ? "active" : "" ?>" 
-                           href="?controller=administration&action=administration&start=<?= $p ?>">
+                    <?php for ($p = $debut; $p <= $fin; $p++): ?>
+                        <a class="<?= $p == $active ? "active" : "" ?>"
+                            href="?controller=administration&action=administration&start=<?= $p ?>">
                             <?= $p ?>
                         </a>
                     <?php endfor; ?>
@@ -81,10 +88,10 @@
             }
         }
         // Filtre de recherche pour la table des jeux
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const input = document.getElementById('recherche-jeu-admin');
             const rows = document.querySelectorAll('#table-jeux-admin tbody tr');
-            input.addEventListener('input', function() {
+            input.addEventListener('input', function () {
                 const filtre = input.value.toLowerCase();
                 rows.forEach(row => {
                     row.style.display = row.textContent.toLowerCase().includes(filtre) ? '' : 'none';
@@ -93,4 +100,4 @@
         });
     </script>
 
-<?php require_once "view_end.php" ?>
+    <?php require_once "view_end.php" ?>
