@@ -293,7 +293,6 @@ SAE4.01-Developpement-d-une-application-develop/
 ├── archive/                      # Prototypes et versions précédentes
 └── README.md                     # Documentation principale
 ```
->>>>>>> main
 
 ---
 
