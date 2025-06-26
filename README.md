@@ -4,7 +4,7 @@
 
 L'Université Sorbonne Paris Nord possède une collection exceptionnelle de plus de 17 000 jeux de société, certains datant du XIXe siècle. Ce projet vise à concevoir une application web complète accompagnée de scripts pour gérer, organiser, et valoriser cette collection unique.
 
-![Aperçu du site]("archive/App/assets/images/2025-06-26 14-27-09.gif")
+![Aperçu du site](archive/App/assets/images/site-demo2.gif)
 
 ---
 
